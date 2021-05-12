@@ -43,7 +43,7 @@ selectDate.addEventListener("change", function(){
 
 function createTicket(vName, pincode, state_name, district_name, center_name, available_capacity){
     let id = uid();
-    let cColor = colors[Math.floor(Math.random() * color.length)];
+    let cColor = colors[Math.floor(Math.random() * colors.length)];
 
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
