@@ -1,16 +1,17 @@
 'use strict';
 
 let filterOptions = document.querySelectorAll(".filter-colors__container")
-// let mainContainer = document.querySelector(".main-container")
+let mainContainer = document.querySelector(".main-container")
 let selectDate = document.querySelector("#start");
 
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let newDate;
 let allTasks = [];
+let update = true;
 
 selectDate.addEventListener("change", function(){
-    let mainContainer = document.querySelector(".main-container");
+    mainContainer = document.querySelector(".main-container");
     if(mainContainer.children.length > 0){
         let tContainer = document.querySelectorAll(".ticket-container");
         for(let i=0; i<tContainer.length; i++){
@@ -29,29 +30,7 @@ selectDate.addEventListener("change", function(){
 
     if(district_id && newDate){
         console.log("fetching...");
-        fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${district_id}&date=${newDate}`)  // returns promise
-            .then(response => response.json())
-            .then(obj => {
-                let arr = obj["sessions"]
-                for(let i=0; i<arr.length; i++){
-                    let vName = arr[i]["vaccine"];
-                    let pincode = arr[i]["pincode"]
-                    let state_name = arr[i]["state_name"];
-                    let district_name = arr[i]["district_name"]
-                    let center_name = arr[i]["name"];
-                    let available_capacity = arr[i]["available_capacity"];
-                    let date = arr[i]["date"]
-                    let age = arr[i]["min_age_limit"];
-
-                    let cColor = colors[Math.floor(Math.random() * colors.length)];
-
-                    createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
-                }
-                console.log(obj["sessions"])
-            })
-            .catch(error => {
-                console.log(error)
-            });
+        getData(mainContainer);
     }
 })
 
@@ -77,3 +56,44 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
 
     mainContainer.appendChild(ticketContainer);
 }
+
+function getData(mainContainer, update){
+    if(update){
+        mainContainer = document.querySelector(".main-container");
+        if(mainContainer.children.length > 0){
+            let tContainer = document.querySelectorAll(".ticket-container");
+            for(let i=0; i<tContainer.length; i++){
+                mainContainer.removeChild(tContainer[i])
+
+            }
+        }
+    }
+    fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${district_id}&date=${newDate}`)  // returns promise
+        .then(response => response.json())
+        .then(obj => {
+            let arr = obj["sessions"]
+            for(let i=0; i<arr.length; i++){
+                let vName = arr[i]["vaccine"];
+                let pincode = arr[i]["pincode"]
+                let state_name = arr[i]["state_name"];
+                let district_name = arr[i]["district_name"]
+                let center_name = arr[i]["name"];
+                let available_capacity = arr[i]["available_capacity"];
+                let date = arr[i]["date"]
+                let age = arr[i]["min_age_limit"];
+
+                let cColor = colors[Math.floor(Math.random() * colors.length)];
+                createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+            }
+            console.log(obj["sessions"])
+        })
+        .catch(error => {
+            console.log(error)
+        });
+}
+
+setInterval(() => {
+    if(district_id, newDate){
+        getData(mainContainer, update)
+    }
+}, 5000);
