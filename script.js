@@ -32,10 +32,11 @@ selectDate.addEventListener("change", function(){
                     let center_name = arr[i]["name"];
                     let available_capacity = arr[i]["available_capacity"];
                     let date = arr[i]["date"]
+                    let age = arr[i]["min_age_limit"];
 
                     let cColor = colors[Math.floor(Math.random() * colors.length)];
 
-                    createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, cColor);
+                    createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
                 }
                 console.log(obj["sessions"])
             })
@@ -45,7 +46,7 @@ selectDate.addEventListener("change", function(){
     }
 })
 
-function createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, cColor){
+function createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
     let id = uid();
 
     let ticketContainer = document.createElement("div");
@@ -57,6 +58,7 @@ function createTicket(vName, pincode, state_name, district_name, center_name, av
            <p><strong>Vaccine Name: </strong> ${vName}</p>
                 <p><strong>No. of doses: </strong> ${available_capacity}</p>
                 <p><strong>Date: </strong> ${date}</p>
+                <p><strong>Age: </strong> ${age}</p>
                 <p><strong>Pincode: </strong> ${pincode}</p>
                 <p><strong>Center Name: </strong> ${center_name}</p>
                 <p><strong>State Name: </strong> ${state_name}</p>
