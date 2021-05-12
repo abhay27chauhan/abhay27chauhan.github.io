@@ -21,7 +21,14 @@ fetch('https://cdn-api.co-vin.in/api/v2/admin/location/states')  // returns prom
 select.addEventListener("change", function(){
     state_id = select.value;
     // console.log("state_id: ",state_id);
+    let getAllOptions = document.querySelectorAll(".district-select option");
+    if(getAllOptions.length > 0){
+        for(let i=1; i<getAllOptions.length; i++){
+            getAllOptions[i].remove();
+        }
+    }
 
+    districtSelect = document.querySelector(".district-select");
     fetch(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`)  // returns promise
         .then(response => response.json())
         .then(obj => {

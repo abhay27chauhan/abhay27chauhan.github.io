@@ -6,6 +6,22 @@ body{
     margin: 0;
 }
 
+.lightpink{
+    background-color: pink;
+}
+
+.lightgreen{
+    background-color: green;
+}
+
+.lightblue{
+    background-color: blue;
+}
+
+.black{
+    background-color: black;
+}
+
 /* Header */
 
 .header-container{

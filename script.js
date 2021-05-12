@@ -1,7 +1,7 @@
 'use strict';
 
 let filterOptions = document.querySelectorAll(".filter-colors__container")
-let mainContainer = document.querySelector(".main-container")
+// let mainContainer = document.querySelector(".main-container")
 let selectDate = document.querySelector("#start");
 
 
@@ -10,6 +10,15 @@ let newDate;
 let allTasks = [];
 
 selectDate.addEventListener("change", function(){
+    let mainContainer = document.querySelector(".main-container");
+    if(mainContainer.children.length > 0){
+        let tContainer = document.querySelectorAll(".ticket-container");
+        for(let i=0; i<tContainer.length; i++){
+            mainContainer.removeChild(tContainer[i])
+
+        }
+    }
+
     let date = selectDate.value;
     let dateArr = date.split("-");
     let day = dateArr[2];
@@ -36,7 +45,7 @@ selectDate.addEventListener("change", function(){
 
                     let cColor = colors[Math.floor(Math.random() * colors.length)];
 
-                    createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                    createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
                 }
                 console.log(obj["sessions"])
             })
@@ -46,11 +55,9 @@ selectDate.addEventListener("change", function(){
     }
 })
 
-function createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
+function createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
     let id = uid();
-    if(mainContainer.children.length > 0){
-        document.querySelector(".ticket-container").remove();
-    }
+    
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
     
