@@ -1,0 +1,109 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+/* Header */
+
+.header-container{
+    /* border: 2px solid red; */
+    height: 12vh;
+    background-color: rgb(41, 41, 41);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 2rem;
+}
+
+.heading-container{
+    width: 25%;
+}
+
+h1{
+    color: white;
+    font-family: 'Montserrat Subrayada', sans-serif;
+}
+
+.select-container{
+    width: 65%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.district-select{
+    width: 30%;
+    height: 2rem;
+}
+
+.select{
+    width: 30%;
+    height: 2rem;
+}
+
+.date-container{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 40%;
+}
+
+label {
+    display: block;
+    color: white;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+
+.main-container{
+    /* border: 2px solid green; */
+    min-height: 88vh;
+    background-color: rgb(238, 238, 238);
+    padding: 3rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 3vw;
+}
+/* Ticket Container */
+
+.ticket-container{
+    height: 17rem;    
+    width:20rem;
+    background-color:white;
+    border-bottom-left-radius: 0.6rem;
+    border-bottom-right-radius: 0.6rem;
+    box-shadow: 0px 12px 7px 3px rgba(0, 0, 0, .2);
+}
+
+.ticket-color{
+    height: 8%;
+    width: 100%;
+    /* background-color: black; */
+}
+
+.ticket_sub-container{
+    height: 92%;
+    width: 100%;
+    padding-left:1rem;
+    font-family: sans-serif;
+    overflow-y: auto;
+}
+
+.ticket-id{
+    color:lightslategray;
+}
+
+.ticket-desc{
+    height: 70%;
+}
+

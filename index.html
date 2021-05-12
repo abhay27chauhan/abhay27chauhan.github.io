@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header-container">
+        <div class="heading-container">
+            <h1>Get Vaccinated</h1>
+        </div>
+        <div class="select-container">
+            <select class="select">
+                <option value="" disabled selected>Select State</option>
+            </select>
+            <select class="district-select">
+                <option value="" disabled selected>Select District</option>
+            </select>
+            <div class="date-container">
+                <label for="start">Start date:</label>
+        
+                <input type="date" id="start" name="trip-start" min="2021-05-12" max="2022-05-13">
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
+
+    <script>
+        // Instantiate
+        var uid = new ShortUniqueId();
+
+    </script>
+    <script src="findStatesAndDistricts.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
