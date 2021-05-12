@@ -48,7 +48,9 @@ selectDate.addEventListener("change", function(){
 
 function createTicket(vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
     let id = uid();
-
+    if(mainContainer.children.length > 0){
+        document.querySelector(".ticket-container").remove();
+    }
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
     
@@ -56,13 +58,13 @@ function createTicket(vName, pincode, state_name, district_name, center_name, av
         <div class="ticket_sub-container">
             <h3 class="ticket-id">#${id}</h3>
            <p><strong>Vaccine Name: </strong> ${vName}</p>
-                <p><strong>No. of doses: </strong> ${available_capacity}</p>
-                <p><strong>Date: </strong> ${date}</p>
-                <p><strong>Age: </strong> ${age}</p>
-                <p><strong>Pincode: </strong> ${pincode}</p>
-                <p><strong>Center Name: </strong> ${center_name}</p>
-                <p><strong>State Name: </strong> ${state_name}</p>
-                <p><strong>District Name: </strong> ${district_name}</p>
+            <p><strong>No. of doses: </strong> ${available_capacity}</p>
+            <p><strong>Date: </strong> ${date}</p>
+            <p><strong>Age: </strong> ${age}</p>
+            <p><strong>Pincode: </strong> ${pincode}</p>
+            <p><strong>Center Name: </strong> ${center_name}</p>
+            <p><strong>State Name: </strong> ${state_name}</p>
+            <p><strong>District Name: </strong> ${district_name}</p>
         </div>`
     
 
