@@ -102,23 +102,28 @@ label {
     margin: .4rem 0;
 } */
 
-.lock-container{
+.age-container{
     height: 70%;
-    width: 5%;
+    width: 9%;
     background-color: rgb(89, 87, 87);
     border-radius: 0.3rem;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
-.lock-container:hover{
+.age-container:hover{
     background-color: rgb(62, 61, 61);
 }
 
-.fas{
-    font-size: x-large;
+.age_cat{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 0;
 }
 
 .main-container{
@@ -130,6 +135,10 @@ label {
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 3vw;
+}
+
+.notice{
+    font-family: sans-serif;
 }
 
 /* modal container */
@@ -236,6 +245,10 @@ label {
     .date-container{
         width: 35%;
     }
+
+    .age_cat{
+        font-size: 1rem;
+    }
 }
 
 @media only screen and (max-width: 970px) {
@@ -258,7 +271,11 @@ label {
        font-size: 2rem;
    }
 
-   .lock-container{
+   .age{
+       
+   }
+
+   .age-container{
        height: 3rem;
        width: 100%;
    }
@@ -324,7 +341,7 @@ label {
         font-size: 1rem;
     }
 
-    .lock-container{
+    .age-container{
         height: 2rem;
     }
 }

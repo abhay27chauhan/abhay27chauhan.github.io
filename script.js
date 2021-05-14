@@ -6,6 +6,8 @@ let selectDate = document.querySelector("#start");
 let addBtn  = document.querySelector(".add");
 let modalContainer = document.querySelector(".modal-container")
 let modalFilters = document.querySelectorAll(".modal-filters");
+let audio = document.querySelector("#audio_id");
+let h1 = document.querySelector(".notice");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
@@ -63,6 +65,8 @@ selectDate.addEventListener("change", function(){
     let year = dateArr[0];
     newDate = [day, month, year].join("-");
     console.log(newDate);
+    
+    h1.style.display = "none";
 
     if(district_id && newDate){
         console.log("fetching...");
@@ -108,8 +112,11 @@ function getData(mainContainer, update){
         .then(response => response.json())
         .then(obj => {
             let arr = obj["sessions"]
-            if(age_param !== null){
+            if(age_param !== null && arr.length > 0){
                 arr = arr.filter(obj => obj["min_age_limit"] == age_param)
+            }
+            if(arr.length > 0){
+                audio.play();
             }
             for(let i=0; i<arr.length; i++){
                 let vName = arr[i]["vaccine"];
