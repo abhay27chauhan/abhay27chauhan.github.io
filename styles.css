@@ -27,57 +27,98 @@ body{
 .header-container{
     /* border: 2px solid red; */
     height: 12vh;
+    width: 100vw;
     background-color: rgb(41, 41, 41);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 2rem;
+    padding-right: 1.3rem;
+    padding-left: 1rem;
 }
 
 .heading-container{
-    width: 25%;
+    width: 24%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-h1{
+.title{
     color: white;
     font-family: 'Montserrat Subrayada', sans-serif;
+    margin: 0;
 }
 
 .select-container{
-    width: 65%;
-    height: 10vh;
+    width: 55%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
 }
 
-.district-select{
-    width: 30%;
+.select{
+    width: 25%;
     height: 2rem;
+    cursor: pointer;
+	border-radius: 5px;
+    background-color: #ddd;
 }
 
-.select{
-    width: 30%;
+.district-select{
+    width: 25%;
     height: 2rem;
+    cursor: pointer;
+	border-radius: 5px;
+    background-color: #ddd;
 }
 
 .date-container{
     display: flex;
     gap: 1rem;
     align-items: center;
-    width: 40%;
+    width: 35%;
+}
+
+#start{
+    height: 2rem;
+    width: 57%;
+    cursor: pointer;
+	border-radius: 5px;
+    background-color: #ddd;
 }
 
 label {
     display: block;
     color: white;
     font: 1rem 'Fira Sans', sans-serif;
+    width: 33%;
 }
 
-input,
+/* input,
 label {
     margin: .4rem 0;
+} */
+
+.lock-container{
+    height: 70%;
+    width: 5%;
+    background-color: rgb(89, 87, 87);
+    border-radius: 0.3rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-container:hover{
+    background-color: rgb(62, 61, 61);
+}
+
+.fas{
+    font-size: x-large;
 }
 
 .main-container{
@@ -89,6 +130,56 @@ label {
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 3vw;
+}
+
+/* modal container */
+.modal-container{
+    height: 40vh;
+    width: 40vw;
+    top: calc((100vh - 40vh)/2 + 6vh);
+    left: calc((100vw - 40vw)/2);
+    position: absolute;
+    /* background-color: black; */
+    /* border: 2px solid red; */
+    display: none;
+    border-radius: 0.8rem;
+    box-shadow: 0px 12px 9px 4px rgba(0, 0, 0, .3);
+}
+
+.modal-filter__conatiner{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(62, 62, 62);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0.8rem;
+}
+
+.modal-filters{
+    width: 20%;
+    height: 15%;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.age_desc{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.border{
+    border: 3px solid white;
+}
+
+.active{
+    background-color: rgb(62, 61, 61);
 }
 /* Ticket Container */
 
@@ -121,4 +212,119 @@ label {
 
 .ticket-desc{
     height: 70%;
+}
+
+@media only screen and (max-width: 1360px) {
+    .title{
+        font-size: 1.7rem;
+    }
+
+    label{
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 1145px) {
+    .title{
+        font-size: 1.5rem;
+    }
+
+    label{
+        font-size: 0.8rem;
+    }
+
+    .date-container{
+        width: 35%;
+    }
+}
+
+@media only screen and (max-width: 970px) {
+   .header-container{
+       flex-direction: column;
+       justify-content: space-around;
+       height: 25vh;
+   }
+
+   .main-container{
+       min-height: 75vh;
+   }
+
+   .heading-container{
+       height: 2.5rem;
+       width: 100%;
+   }
+
+   .title{
+       font-size: 2rem;
+   }
+
+   .lock-container{
+       height: 3rem;
+       width: 100%;
+   }
+
+   .select-container{
+       height: 3rem;
+       width: 100%;
+       padding-left: 2rem;
+       padding-right: 2rem;
+   }
+
+   .select{
+       width: 25%;
+   }
+
+   .district-select{
+       width: 25%;
+   }
+
+   .date-container{
+       width: 35%;
+   }
+
+    label{
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 671px) {
+    .header-container{
+        height: 35vh;
+    }
+
+    .main-container{
+        min-height: 65vh;
+    }
+    
+    .select-container{
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 10rem;
+    }
+
+    .select{
+        width: 70%;
+    }
+
+    .district-select{
+        width: 70%;
+    }
+
+    .date-container{
+        width: 70%;
+        padding-left: 0;
+    }
+
+    #start{
+        width: 70%;
+    }
+
+    label{
+        font-size: 1rem;
+    }
+
+    .lock-container{
+        height: 2rem;
+    }
 }

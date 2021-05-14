@@ -3,22 +3,58 @@
 let filterOptions = document.querySelectorAll(".filter-colors__container")
 let mainContainer = document.querySelector(".main-container")
 let selectDate = document.querySelector("#start");
-
+let addBtn  = document.querySelector(".add");
+let modalContainer = document.querySelector(".modal-container")
+let modalFilters = document.querySelectorAll(".modal-filters");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
+let flag = false;
+let age_param = null;
 let newDate;
-let allTasks = [];
-let update = true;
+
+addBtn.addEventListener("click", function(){
+    if(flag === false){
+        modalContainer.style.display = "flex";
+        addBtn.classList.add("active");
+    }else{
+        addBtn.classList.remove("active");
+        modalContainer.style.display = "none";
+    }
+    flag = !flag;
+})
+
+for(let i=0; i<modalFilters.length; i++){
+    modalFilters[i].addEventListener("click", function(){
+        modalFilters.forEach(filterOption => {
+            filterOption.classList.remove("border");
+        })
+
+        mainContainer = document.querySelector(".main-container");
+        if(mainContainer.children.length > 0){
+            let tContainer = document.querySelectorAll(".ticket-container");
+            for(let i=0; i<tContainer.length; i++){
+                mainContainer.removeChild(tContainer[i])
+
+            }
+        }
+
+        let ageElem = modalFilters[i].children[0];
+        if(ageElem.innerText == "18+"){
+            age_param = 18;
+        }else if(ageElem.innerText == "45+"){
+            age_param = 45;
+        }else if(ageElem.innerText == "ALL"){
+            age_param = null;
+        }
+        modalFilters[i].classList.add("border");
+        if(district_id && newDate){
+            console.log("fetching...");
+            getData(mainContainer);
+        }
+    })
+}
 
 selectDate.addEventListener("change", function(){
-    mainContainer = document.querySelector(".main-container");
-    if(mainContainer.children.length > 0){
-        let tContainer = document.querySelectorAll(".ticket-container");
-        for(let i=0; i<tContainer.length; i++){
-            mainContainer.removeChild(tContainer[i])
-
-        }
-    }
 
     let date = selectDate.value;
     let dateArr = date.split("-");
@@ -72,6 +108,9 @@ function getData(mainContainer, update){
         .then(response => response.json())
         .then(obj => {
             let arr = obj["sessions"]
+            if(age_param !== null){
+                arr = arr.filter(obj => obj["min_age_limit"] == age_param)
+            }
             for(let i=0; i<arr.length; i++){
                 let vName = arr[i]["vaccine"];
                 let pincode = arr[i]["pincode"]
@@ -83,7 +122,9 @@ function getData(mainContainer, update){
                 let age = arr[i]["min_age_limit"];
 
                 let cColor = colors[Math.floor(Math.random() * colors.length)];
+                console.log(age)
                 createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                
             }
             console.log(obj["sessions"])
         })
@@ -94,6 +135,6 @@ function getData(mainContainer, update){
 
 setInterval(() => {
     if(district_id, newDate){
-        getData(mainContainer, update)
+        getData(mainContainer, true)
     }
 }, 5000);

@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Subrayada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="styles.css">
-    <title>Get Vacination</title>
+    <title>Get Vaccinated</title>
 </head>
 <body>
     <div class="header-container">
         <div class="heading-container">
-            <h1>Get Vaccinated</h1>
+            <h1 class="title">Get Vaccinated</h1>
         </div>
         <div class="select-container">
             <select class="select">
@@ -28,11 +29,28 @@
                 <input type="date" id="start" name="trip-start" min="2021-05-12" max="2022-05-13">
             </div>
         </div>
+        <div class="lock-container add">
+            <i class="fas fa-plus"></i>
+        </div>
     </div>
     <div class="main-container">
+        <div class="modal-container animate__animated animate__bounceIn">
+            <div class="modal-filter__conatiner">
+                <div class="modal-filters lightpink">
+                    <p class="age_desc">18+</p>
+                </div>
+                <div class="modal-filters lightpink">
+                    <p class="age_desc">45+</p>
+                </div>
+                <div class="modal-filters lightpink border">
+                    <p class="age_desc">ALL</p>
+                </div>
+                <!-- <div class="modal-filters black border"></div> -->
+            </div>
+        </div>
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
-
     <script>
         // Instantiate
         var uid = new ShortUniqueId();
