@@ -75,6 +75,22 @@ body{
     background-color: #ddd;
 }
 
+.input-container{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: 45%;
+    display: none;
+}
+
+#input-pin{
+    height: 2rem;
+    width: 45%;
+    cursor: pointer;
+	border-radius: 5px;
+    background-color: #ddd;
+}
+
 .date-container{
     display: flex;
     gap: 1rem;
@@ -137,15 +153,16 @@ label {
     gap: 3vw;
 }
 
+/* h1 */
 .notice{
     font-family: sans-serif;
 }
 
 /* modal container */
 .modal-container{
-    height: 40vh;
+    height: 35vh;
     width: 40vw;
-    top: calc((100vh - 40vh)/2 + 6vh);
+    top: calc((100vh - 35vh)/2 + 6vh);
     left: calc((100vw - 40vw)/2);
     position: absolute;
     /* background-color: black; */
@@ -162,14 +179,15 @@ label {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem;
     border-radius: 0.8rem;
 }
 
 .modal-filters{
-    width: 20%;
-    height: 15%;
+    width: 24%;
+    height: 17%;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
@@ -183,6 +201,22 @@ label {
     margin: 0;
 }
 
+.pin-dist_container{
+    width: 40%;
+    height: 17%;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pin-dist{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
 .border{
     border: 3px solid white;
 }
@@ -190,6 +224,27 @@ label {
 .active{
     background-color: rgb(62, 61, 61);
 }
+
+/* info container */
+.info-container{
+    height: 15vh;
+    width: 22vw;
+    top: 20vh;
+    left: 37vw;
+    position: absolute;
+    border-radius: 0.8rem;
+    box-shadow: 0px 12px 9px 4px rgba(0, 0, 0, .3);
+    background-color: rgb(62, 62, 62);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.z-dose{
+    color: white;
+    font-family: sans-serif;
+}
+
 /* Ticket Container */
 
 .ticket-container{
@@ -302,6 +357,16 @@ label {
     label{
         font-size: 0.9rem;
     }
+
+    .info-container{
+        top: 31vh;
+        width: 30vw;
+        left: 34vw;
+    }
+
+    .modal-container{
+        top: 50vh;
+    }
 }
 
 @media only screen and (max-width: 671px) {
@@ -333,6 +398,15 @@ label {
         padding-left: 0;
     }
 
+    .input-container{
+        width: 70%;
+        padding-left: 0;
+    }
+
+    #input-pin{
+        width: 70%;
+    }
+
     #start{
         width: 70%;
     }
@@ -343,5 +417,30 @@ label {
 
     .age-container{
         height: 2rem;
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    .modal-container{
+        width: 80vw;
+        left: calc((100vw - 80vw)/2);
+    }
+
+    .title{
+       font-size: 1.8rem;
+   }
+
+   .info-container{
+        top: 38vh;
+        width: 47vw;
+        left: 30vw;
+    }
+
+    .z-dose{
+        font-size: 1.4rem;
+    }
+
+    .modal-container{
+        top: 55vh;
     }
 }

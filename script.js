@@ -8,6 +8,10 @@ let modalContainer = document.querySelector(".modal-container")
 let modalFilters = document.querySelectorAll(".modal-filters");
 let audio = document.querySelector("#audio_id");
 let h1 = document.querySelector(".notice");
+let pinDistContainer = document.querySelector(".pin-dist_container");
+let pinDist = document.querySelector(".pin-dist");
+let inputContainer = document.querySelector(".input-container");
+let infoContainer = document.querySelector(".info-container");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
@@ -31,14 +35,14 @@ for(let i=0; i<modalFilters.length; i++){
             filterOption.classList.remove("border");
         })
 
-        mainContainer = document.querySelector(".main-container");
-        if(mainContainer.children.length > 0){
-            let tContainer = document.querySelectorAll(".ticket-container");
-            for(let i=0; i<tContainer.length; i++){
-                mainContainer.removeChild(tContainer[i])
+        // mainContainer = document.querySelector(".main-container");
+        // if(mainContainer.children.length > 0){
+        //     let tContainer = document.querySelectorAll(".ticket-container");
+        //     for(let i=0; i<tContainer.length; i++){
+        //         mainContainer.removeChild(tContainer[i])
 
-            }
-        }
+        //     }
+        // }
 
         let ageElem = modalFilters[i].children[0];
         if(ageElem.innerText == "18+"){
@@ -55,6 +59,22 @@ for(let i=0; i<modalFilters.length; i++){
         }
     })
 }
+
+pinDistContainer.addEventListener("click", function(){
+    pinFlag = !pinFlag;
+    
+    if(pinFlag){
+        pinDist.innerText = "Pincode";
+        inputContainer.style.display = "flex";
+        select.style.display = "none";
+        districtSelect.style.display = "none";
+    }else{
+        pinDist.innerText = "District";
+        inputContainer.style.display = "none";
+        select.style.display = "block";
+        districtSelect.style.display = "block";
+    }
+})
 
 selectDate.addEventListener("change", function(){
 
@@ -73,6 +93,56 @@ selectDate.addEventListener("change", function(){
         getData(mainContainer);
     }
 })
+
+function getData(mainContainer){
+    infoContainer.style.display = "none";
+    
+    mainContainer = document.querySelector(".main-container");
+    if(mainContainer.children.length > 0){
+        let tContainer = document.querySelectorAll(".ticket-container");
+        for(let i=0; i<tContainer.length; i++){
+            mainContainer.removeChild(tContainer[i])
+
+        }
+    }
+
+    fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${district_id}&date=${newDate}`)  // returns promise
+        .then(response => response.json())
+        .then(obj => {
+            let arr = obj["sessions"]
+            if(age_param !== null && arr.length > 0){
+                arr = arr.filter(obj => obj["min_age_limit"] == age_param)
+            }
+            if(arr.length > 0){
+                audio.play();
+            }
+
+            if(arr.length == 0){
+                infoContainer.style.display = "flex";
+            }
+
+            for(let i=0; i<arr.length; i++){
+                infoContainer.style.display = "none";
+                let vName = arr[i]["vaccine"];
+                let pincode = arr[i]["pincode"]
+                let state_name = arr[i]["state_name"];
+                let district_name = arr[i]["district_name"]
+                let center_name = arr[i]["name"];
+                let available_capacity = arr[i]["available_capacity"];
+                let date = arr[i]["date"]
+                let age = arr[i]["min_age_limit"];
+
+                let cColor = colors[Math.floor(Math.random() * colors.length)];
+                console.log(age)
+                createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                
+            }
+            console.log(obj["sessions"])
+        })
+        .catch(error => {
+            console.log(error)
+        });
+}
 
 function createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
     let id = uid();
@@ -97,51 +167,8 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
     mainContainer.appendChild(ticketContainer);
 }
 
-function getData(mainContainer, update){
-    if(update){
-        mainContainer = document.querySelector(".main-container");
-        if(mainContainer.children.length > 0){
-            let tContainer = document.querySelectorAll(".ticket-container");
-            for(let i=0; i<tContainer.length; i++){
-                mainContainer.removeChild(tContainer[i])
-
-            }
-        }
-    }
-    fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${district_id}&date=${newDate}`)  // returns promise
-        .then(response => response.json())
-        .then(obj => {
-            let arr = obj["sessions"]
-            if(age_param !== null && arr.length > 0){
-                arr = arr.filter(obj => obj["min_age_limit"] == age_param)
-            }
-            if(arr.length > 0){
-                audio.play();
-            }
-            for(let i=0; i<arr.length; i++){
-                let vName = arr[i]["vaccine"];
-                let pincode = arr[i]["pincode"]
-                let state_name = arr[i]["state_name"];
-                let district_name = arr[i]["district_name"]
-                let center_name = arr[i]["name"];
-                let available_capacity = arr[i]["available_capacity"];
-                let date = arr[i]["date"]
-                let age = arr[i]["min_age_limit"];
-
-                let cColor = colors[Math.floor(Math.random() * colors.length)];
-                console.log(age)
-                createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
-                
-            }
-            console.log(obj["sessions"])
-        })
-        .catch(error => {
-            console.log(error)
-        });
-}
-
 setInterval(() => {
-    if(district_id, newDate){
-        getData(mainContainer, true)
+    if(district_id && newDate){
+        getData(mainContainer)
     }
 }, 5000);

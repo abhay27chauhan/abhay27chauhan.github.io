@@ -3,20 +3,23 @@ let districtSelect = document.querySelector(".district-select");
 
 let state_id;
 let district_id;
+let pinFlag = false;
 
-fetch('https://cdn-api.co-vin.in/api/v2/admin/location/states')  // returns promise
-    .then(response => response.json())
-    .then(obj => {
-        let arr = obj["states"]
-        for(let i=0; i<arr.length; i++){
-            let option = document.createElement("option");
-            option.setAttribute("value", `${arr[i]["state_id"]}`);
-            option.innerText = arr[i]["state_name"];
-            select.appendChild(option)
-        }
-        console.log(obj["states"])
-    })
-    .catch(error => console.log(error));
+if(!pinFlag){
+    fetch('https://cdn-api.co-vin.in/api/v2/admin/location/states')  // returns promise
+        .then(response => response.json())
+        .then(obj => {
+            let arr = obj["states"]
+            for(let i=0; i<arr.length; i++){
+                let option = document.createElement("option");
+                option.setAttribute("value", `${arr[i]["state_id"]}`);
+                option.innerText = arr[i]["state_name"];
+                select.appendChild(option)
+            }
+            console.log(obj["states"])
+        })
+        .catch(error => console.log(error));
+}
 
 select.addEventListener("change", function(){
     state_id = select.value;

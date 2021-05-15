@@ -23,6 +23,11 @@
             <select class="district-select">
                 <option value="" disabled selected>Select District</option>
             </select>
+            <div class="input-container">
+                <label for="input-pin">Pincode:</label>
+            
+                <input type="text" id="input-pin" name="pincode">
+            </div>
             <div class="date-container">
                 <label for="start">Start date:</label>
         
@@ -45,10 +50,16 @@
                 <div class="modal-filters lightpink border">
                     <p class="age_desc">ALL</p>
                 </div>
+                <div class="pin-dist_container lightpink border">
+                    <p class="pin-dist">District</p>
+                </div>
             </div>
         </div>
         <audio src="beeper.mp3" id="audio_id"></audio>
         <h1 class="notice">This website refreshes every 5 seconds....</h1>
+        <div class="info-container animate__animated animate__bounceIn">
+            <h1 class="z-dose">0 Dose Found</h1>
+        </div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/short-unique-id@latest/dist/short-unique-id.min.js"></script>
