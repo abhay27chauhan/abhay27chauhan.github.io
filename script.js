@@ -122,7 +122,7 @@ function getData(mainContainer){
     fetch(fullUrl)  // returns promise
         .then(response => response.json())
         .then(obj => {
-            let arr = obj["centers"]
+            let arr = obj["centers"];
 
             for(let i=0; i<arr.length; i++){
                 let arrOfSessions = [];
@@ -143,13 +143,9 @@ function getData(mainContainer){
                     if(arrOfSessions.length > 0){
                         audio.play();
                     }
-                    if(arrOfSessions.length == 0){
-                        infoContainer.style.display = "flex";
-                    }
-
 
                     for(let j=0; j<arrOfSessions.length; j++){
-                        infoContainer.style.display = "none";
+
                         let vName = arrOfSessions[j]["vaccine"];
                         let pincode = arr[i]["pincode"]
                         let state_name = arr[i]["state_name"];
@@ -160,12 +156,15 @@ function getData(mainContainer){
                         let age = arrOfSessions[j]["min_age_limit"];
 
                         let cColor = colors[Math.floor(Math.random() * colors.length)];
-                        if(available_capacity !== 0){
-                            createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
-                        }
+                        createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
                     }
                 }
                 
+            }
+            let ticketContainer = document.querySelector(".ticket-container");
+            if(!ticketContainer){
+                console.log(">> ",ticketContainer)
+                infoContainer.style.display = "flex";
             }
             console.log(obj["centers"])
         })
