@@ -117,7 +117,7 @@ function getData(mainContainer){
         }
     }
 
-    let fullUrl = pinFlag ? `${initialUrl}/calendarBy?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
+    let fullUrl = pinFlag ? `${initialUrl}/findByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/findByDistrict?district_id=${district_id}&date=${newDate}`
 
     fetch(fullUrl)  // returns promise
         .then(response => response.json())
