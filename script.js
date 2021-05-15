@@ -12,11 +12,20 @@ let pinDistContainer = document.querySelector(".pin-dist_container");
 let pinDist = document.querySelector(".pin-dist");
 let inputContainer = document.querySelector(".input-container");
 let infoContainer = document.querySelector(".info-container");
+let inputPin = document.querySelector("#input-pin");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
 let age_param = null;
 let newDate;
+let pincode;
+let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public"
+
+mainContainer.addEventListener("click", function(){
+    addBtn.classList.remove("active");
+    modalContainer.style.display = "none";
+    flag = false;
+})
 
 addBtn.addEventListener("click", function(){
     if(flag === false){
@@ -35,15 +44,6 @@ for(let i=0; i<modalFilters.length; i++){
             filterOption.classList.remove("border");
         })
 
-        // mainContainer = document.querySelector(".main-container");
-        // if(mainContainer.children.length > 0){
-        //     let tContainer = document.querySelectorAll(".ticket-container");
-        //     for(let i=0; i<tContainer.length; i++){
-        //         mainContainer.removeChild(tContainer[i])
-
-        //     }
-        // }
-
         let ageElem = modalFilters[i].children[0];
         if(ageElem.innerText == "18+"){
             age_param = 18;
@@ -53,7 +53,7 @@ for(let i=0; i<modalFilters.length; i++){
             age_param = null;
         }
         modalFilters[i].classList.add("border");
-        if(district_id && newDate){
+        if(newDate && (district_id || pincode)){
             console.log("fetching...");
             getData(mainContainer);
         }
@@ -65,15 +65,26 @@ pinDistContainer.addEventListener("click", function(){
     
     if(pinFlag){
         pinDist.innerText = "Pincode";
+        districtSelect.value = "";
+        district_id = null;
         inputContainer.style.display = "flex";
         select.style.display = "none";
         districtSelect.style.display = "none";
     }else{
         pinDist.innerText = "District";
+        pincode = null;
+        inputPin.value = "";
         inputContainer.style.display = "none";
         select.style.display = "block";
         districtSelect.style.display = "block";
     }
+
+    infoContainer.style.display = "none";
+})
+
+inputPin.addEventListener("blur", function(){
+    pincode = inputPin.value;
+    console.log(pincode)
 })
 
 selectDate.addEventListener("change", function(){
@@ -88,7 +99,7 @@ selectDate.addEventListener("change", function(){
     
     h1.style.display = "none";
 
-    if(district_id && newDate){
+    if(newDate && (district_id || pincode)){
         console.log("fetching...");
         getData(mainContainer);
     }
@@ -106,7 +117,9 @@ function getData(mainContainer){
         }
     }
 
-    fetch(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=${district_id}&date=${newDate}`)  // returns promise
+    let fullUrl = pinFlag ? `${initialUrl}/findByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/findByDistrict?district_id=${district_id}&date=${newDate}`
+
+    fetch(fullUrl)  // returns promise
         .then(response => response.json())
         .then(obj => {
             let arr = obj["sessions"]
@@ -168,7 +181,7 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
 }
 
 setInterval(() => {
-    if(district_id && newDate){
+    if(newDate && (district_id || pincode)){
         getData(mainContainer)
     }
 }, 5000);
