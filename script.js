@@ -117,40 +117,50 @@ function getData(mainContainer){
         }
     }
 
-    let fullUrl = pinFlag ? `${initialUrl}/findByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/findByDistrict?district_id=${district_id}&date=${newDate}`
+    let fullUrl = pinFlag ? `${initialUrl}/calendarByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
 
     fetch(fullUrl)  // returns promise
         .then(response => response.json())
         .then(obj => {
-            let arr = obj["sessions"]
-            if(age_param !== null && arr.length > 0){
-                arr = arr.filter(obj => obj["min_age_limit"] == age_param)
-            }
+            let arr = obj["centers"]
+            let arrOfSessions = [];
+            
             if(arr.length > 0){
+                for(let i=0; i<arr.length; i++){
+                    arrOfSessions = arr[i]["sessions"];
+                }
+            }
+
+            if(age_param !== null && arrOfSessions.length > 0){
+                arrOfSessions = arrOfSessions.filter(obj => obj["min_age_limit"] == age_param)
+            }
+            if(arrOfSessions.length > 0){
                 audio.play();
             }
 
-            if(arr.length == 0){
+            if(arrOfSessions.length == 0){
                 infoContainer.style.display = "flex";
             }
 
             for(let i=0; i<arr.length; i++){
-                infoContainer.style.display = "none";
-                let vName = arr[i]["vaccine"];
-                let pincode = arr[i]["pincode"]
-                let state_name = arr[i]["state_name"];
-                let district_name = arr[i]["district_name"]
-                let center_name = arr[i]["name"];
-                let available_capacity = arr[i]["available_capacity"];
-                let date = arr[i]["date"]
-                let age = arr[i]["min_age_limit"];
+                for(let j=0; j<arrOfSessions.length; j++){
+                    infoContainer.style.display = "none";
+                    let vName = arrOfSessions[j]["vaccine"];
+                    let pincode = arr[i]["pincode"]
+                    let state_name = arr[i]["state_name"];
+                    let district_name = arr[i]["district_name"]
+                    let center_name = arr[i]["name"];
+                    let available_capacity = arrOfSessions[j]["available_capacity"];
+                    let date = arrOfSessions[j]["date"]
+                    let age = arrOfSessions[j]["min_age_limit"];
 
-                let cColor = colors[Math.floor(Math.random() * colors.length)];
-                console.log(age)
-                createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                    let cColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                }
                 
             }
-            console.log(obj["sessions"])
+            console.log(obj["centers"])
         })
         .catch(error => {
             console.log(error)
