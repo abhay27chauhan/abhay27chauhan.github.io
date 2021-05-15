@@ -123,40 +123,47 @@ function getData(mainContainer){
         .then(response => response.json())
         .then(obj => {
             let arr = obj["centers"]
-            let arrOfSessions = [];
-            
-            if(arr.length > 0){
-                for(let i=0; i<arr.length; i++){
-                    arrOfSessions = arr[i]["sessions"];
-                }
-            }
-
-            if(age_param !== null && arrOfSessions.length > 0){
-                arrOfSessions = arrOfSessions.filter(obj => obj["min_age_limit"] == age_param)
-            }
-            if(arrOfSessions.length > 0){
-                audio.play();
-            }
-
-            if(arrOfSessions.length == 0){
-                infoContainer.style.display = "flex";
-            }
 
             for(let i=0; i<arr.length; i++){
-                for(let j=0; j<arrOfSessions.length; j++){
-                    infoContainer.style.display = "none";
-                    let vName = arrOfSessions[j]["vaccine"];
-                    let pincode = arr[i]["pincode"]
-                    let state_name = arr[i]["state_name"];
-                    let district_name = arr[i]["district_name"]
-                    let center_name = arr[i]["name"];
-                    let available_capacity = arrOfSessions[j]["available_capacity"];
-                    let date = arrOfSessions[j]["date"]
-                    let age = arrOfSessions[j]["min_age_limit"];
+                let arrOfSessions = [];
 
-                    let cColor = colors[Math.floor(Math.random() * colors.length)];
+                if(arr.length > 0){
+                    arrOfSessions = arr[i]["sessions"];
 
-                    createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                    if(age_param !== null && arrOfSessions.length > 0){
+                        arrOfSessions = arrOfSessions.filter(obj => obj["min_age_limit"] == age_param)
+                    }
+
+                    if(arrOfSessions.length > 0){
+                        arrOfSessions = arrOfSessions.filter(obj => { 
+                            return obj["available_capacity"] > 0
+                        })
+                    }
+
+                    if(arrOfSessions.length > 0){
+                        audio.play();
+                    }
+                    if(arrOfSessions.length == 0){
+                        infoContainer.style.display = "flex";
+                    }
+
+
+                    for(let j=0; j<arrOfSessions.length; j++){
+                        infoContainer.style.display = "none";
+                        let vName = arrOfSessions[j]["vaccine"];
+                        let pincode = arr[i]["pincode"]
+                        let state_name = arr[i]["state_name"];
+                        let district_name = arr[i]["district_name"]
+                        let center_name = arr[i]["name"];
+                        let available_capacity = arrOfSessions[j]["available_capacity"];
+                        let date = arrOfSessions[j]["date"]
+                        let age = arrOfSessions[j]["min_age_limit"];
+
+                        let cColor = colors[Math.floor(Math.random() * colors.length)];
+                        if(available_capacity !== 0){
+                            createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                        }
+                    }
                 }
                 
             }
