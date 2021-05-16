@@ -50,6 +50,7 @@ body{
     margin: 0;
 }
 
+/* state selection */
 .select-container{
     width: 55%;
     height: 100%;
@@ -67,6 +68,7 @@ body{
     background-color: #ddd;
 }
 
+/* district selection */
 .district-select{
     width: 25%;
     height: 2rem;
@@ -75,6 +77,7 @@ body{
     background-color: #ddd;
 }
 
+/* pincode */
 .input-container{
     display: flex;
     gap: 1rem;
@@ -91,6 +94,7 @@ body{
     background-color: #ddd;
 }
 
+/* date selection */
 .date-container{
     display: flex;
     gap: 1rem;
@@ -112,11 +116,6 @@ label {
     font: 1rem 'Fira Sans', sans-serif;
     width: 33%;
 }
-
-/* input,
-label {
-    margin: .4rem 0;
-} */
 
 .age-container{
     height: 70%;
@@ -201,6 +200,22 @@ label {
     margin: 0;
 }
 
+.capacity-filters{
+    width: 30%;
+    height: 17%;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cap_desc{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
 .pin-dist_container{
     width: 40%;
     height: 17%;
@@ -248,7 +263,7 @@ label {
 /* Ticket Container */
 
 .ticket-container{
-    height: 18rem;    
+    height: 19rem;    
     width:20rem;
     background-color:white;
     border-bottom-left-radius: 0.6rem;
@@ -257,13 +272,13 @@ label {
 }
 
 .ticket-color{
-    height: 8%;
+    height: 6%;
     width: 100%;
     /* background-color: black; */
 }
 
 .ticket_sub-container{
-    height: 92%;
+    height: 94%;
     width: 100%;
     padding-left:1rem;
     font-family: sans-serif;
@@ -272,10 +287,6 @@ label {
 
 .ticket-id{
     color:lightslategray;
-}
-
-.ticket-desc{
-    height: 70%;
 }
 
 @media only screen and (max-width: 1360px) {
@@ -313,10 +324,6 @@ label {
        height: 25vh;
    }
 
-   .main-container{
-       min-height: 75vh;
-   }
-
    .heading-container{
        height: 2.5rem;
        width: 100%;
@@ -324,15 +331,6 @@ label {
 
    .title{
        font-size: 2rem;
-   }
-
-   .age{
-       
-   }
-
-   .age-container{
-       height: 3rem;
-       width: 100%;
    }
 
    .select-container{
@@ -357,6 +355,19 @@ label {
     label{
         font-size: 0.9rem;
     }
+
+    .main-container{
+       min-height: 75vh;
+   }
+
+   .age-container{
+       height: 3rem;
+       width: 100%;
+   }
+
+   .cap_desc{
+       font-size: 1rem;
+   }
 
     .info-container{
         top: 31vh;
@@ -431,9 +442,9 @@ label {
    }
 
    .info-container{
-        top: 38vh;
+        top: 36vh;
         width: 47vw;
-        left: 30vw;
+        left: 28vw;
     }
 
     .z-dose{
@@ -441,6 +452,10 @@ label {
     }
 
     .modal-container{
-        top: 55vh;
+        top: 52vh;
+    }
+
+    .capacity-filters{
+        width: 29%;
     }
 }

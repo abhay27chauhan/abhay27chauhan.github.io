@@ -1,22 +1,24 @@
 'use strict';
 
-let filterOptions = document.querySelectorAll(".filter-colors__container")
-let mainContainer = document.querySelector(".main-container")
 let selectDate = document.querySelector("#start");
-let addBtn  = document.querySelector(".add");
-let modalContainer = document.querySelector(".modal-container")
-let modalFilters = document.querySelectorAll(".modal-filters");
-let audio = document.querySelector("#audio_id");
-let h1 = document.querySelector(".notice");
+let inputContainer = document.querySelector(".input-container");
+let inputPin = document.querySelector("#input-pin");
 let pinDistContainer = document.querySelector(".pin-dist_container");
 let pinDist = document.querySelector(".pin-dist");
-let inputContainer = document.querySelector(".input-container");
+let addBtn  = document.querySelector(".add");
+
+let mainContainer = document.querySelector(".main-container");
+let modalContainer = document.querySelector(".modal-container")
+let modalFilters = document.querySelectorAll(".modal-filters");
 let infoContainer = document.querySelector(".info-container");
-let inputPin = document.querySelector("#input-pin");
+let capOptions = document.querySelectorAll(".capacity-filters");
+let audio = document.querySelector("#audio_id");
+let h1 = document.querySelector(".notice");
 
 let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
 let age_param = null;
+let cap_param = "Dose 1";
 let newDate;
 let pincode;
 let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public"
@@ -57,6 +59,22 @@ for(let i=0; i<modalFilters.length; i++){
             console.log("fetching...");
             getData(mainContainer);
         }
+    })
+}
+
+for(let i=0; i<capOptions.length; i++){
+    capOptions[i].addEventListener("click", function(){
+        capOptions.forEach(capOption => {
+            capOption.classList.remove("border");
+        })
+
+        let capElem = capOptions[i].children[0];
+        if(capElem.innerText == "DOSE 1"){
+            cap_param = "Dose 1";
+        }else if(capElem.innerText == "DOSE 2"){
+            cap_param = "Dose 2"
+        }
+        capOptions[i].classList.add("border");
     })
 }
 
@@ -117,6 +135,8 @@ function getData(mainContainer){
         }
     }
 
+    console.log(`Date: ${newDate} | district_id: ${district_id} | pincode: ${pincode} | cap_param: ${cap_param} | age_param: ${age_param}`)
+
     let fullUrl = pinFlag ? `${initialUrl}/calendarByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
 
     fetch(fullUrl)  // returns promise
@@ -140,6 +160,12 @@ function getData(mainContainer){
                         })
                     }
 
+                    if(cap_param == "Dose 1" && arrOfSessions.length > 0){
+                        arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose1"] > 0)
+                    }else if(cap_param == "Dose 2" && arrOfSessions.length > 0){
+                        arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose2"] > 0)
+                    }
+
                     if(arrOfSessions.length > 0){
                         audio.play();
                     }
@@ -151,19 +177,19 @@ function getData(mainContainer){
                         let state_name = arr[i]["state_name"];
                         let district_name = arr[i]["district_name"]
                         let center_name = arr[i]["name"];
-                        let available_capacity = arrOfSessions[j]["available_capacity"];
                         let date = arrOfSessions[j]["date"]
                         let age = arrOfSessions[j]["min_age_limit"];
+                        let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
+                        let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
 
                         let cColor = colors[Math.floor(Math.random() * colors.length)];
-                        createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor);
+                        createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, cColor);
                     }
                 }
                 
             }
             let ticketContainer = document.querySelector(".ticket-container");
             if(!ticketContainer){
-                console.log(">> ",ticketContainer)
                 infoContainer.style.display = "flex";
             }
             console.log(obj["centers"])
@@ -173,17 +199,15 @@ function getData(mainContainer){
         });
 }
 
-function createTicket(mainContainer, vName, pincode, state_name, district_name, center_name, available_capacity, date, age, cColor){
-    let id = uid();
-    
+function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, cColor){
+
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
     
     ticketContainer.innerHTML = `<div class="ticket-color ${cColor}"></div>
         <div class="ticket_sub-container">
-            <h3 class="ticket-id">#${id}</h3>
            <p><strong>Vaccine Name: </strong> ${vName}</p>
-            <p><strong>No. of doses: </strong> ${available_capacity}</p>
+            <p><strong>No. of ${cap_param}: </strong>  ${dose1 ? dose1 : dose2}</p>
             <p><strong>Date: </strong> ${date}</p>
             <p><strong>Age: </strong> ${age}</p>
             <p><strong>Pincode: </strong> ${pincode}</p>
