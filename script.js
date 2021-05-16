@@ -19,6 +19,7 @@ let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
 let age_param = null;
 let cap_param = "Dose 1";
+let pinFlag = false;
 let newDate;
 let pincode;
 let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public"
