@@ -12,6 +12,7 @@ let modalContainer = document.querySelector(".modal-container")
 let modalFilters = document.querySelectorAll(".modal-filters");
 let infoContainer = document.querySelector(".info-container");
 let capOptions = document.querySelectorAll(".capacity-filters");
+let vacOptions = document.querySelectorAll(".vaccine-filters");
 let audio = document.querySelector("#audio_id");
 let h1 = document.querySelector(".notice");
 
@@ -19,16 +20,11 @@ let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
 let age_param = null;
 let cap_param = "Dose 1";
+let vac_param = null;
 let pinFlag = false;
 let newDate;
 let pincode;
-let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public"
-
-mainContainer.addEventListener("click", function(){
-    addBtn.classList.remove("active");
-    modalContainer.style.display = "none";
-    flag = false;
-})
+let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions";
 
 addBtn.addEventListener("click", function(){
     if(flag === false){
@@ -76,6 +72,23 @@ for(let i=0; i<capOptions.length; i++){
             cap_param = "Dose 2"
         }
         capOptions[i].classList.add("border");
+    })
+}
+
+for(let i=0; i<vacOptions.length; i++){
+    vacOptions[i].addEventListener("click", function(){
+        vacOptions.forEach(vacOption => {
+            vacOption.classList.remove("border");
+        })
+        let vacElem = vacOptions[i].children[0];
+        if(vacElem.innerText == "COVAXIN"){
+            vac_param = "COVAXIN"
+        }else if(vacElem.innerText == "C-SHIELD"){
+            vac_param = "COVISHIELD"
+        }else{
+            vac_param = null;
+        }
+        vacOptions[i].classList.add("border");
     })
 }
 
@@ -136,7 +149,7 @@ function getData(mainContainer){
         }
     }
 
-    console.log(`Date: ${newDate} | district_id: ${district_id} | pincode: ${pincode} | cap_param: ${cap_param} | age_param: ${age_param}`)
+    console.log(`Date: ${newDate} | district_id: ${district_id} | pincode: ${pincode} | cap_param: ${cap_param} | age_param: ${age_param} | vac_param: ${vac_param}`)
 
     let fullUrl = pinFlag ? `${initialUrl}/calendarByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
 
@@ -165,6 +178,10 @@ function getData(mainContainer){
                         arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose1"] > 0)
                     }else if(cap_param == "Dose 2" && arrOfSessions.length > 0){
                         arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose2"] > 0)
+                    }
+
+                    if(vac_param !== null && arrOfSessions.length > 0){
+                        arrOfSessions = arrOfSessions.filter(obj => obj["vaccine"] == vac_param)
                     }
 
                     if(arrOfSessions.length > 0){
@@ -225,4 +242,4 @@ setInterval(() => {
     if(newDate && (district_id || pincode)){
         getData(mainContainer)
     }
-}, 5000);
+}, 4000);

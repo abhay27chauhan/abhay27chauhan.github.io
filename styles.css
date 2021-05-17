@@ -159,10 +159,10 @@ label {
 
 /* modal container */
 .modal-container{
-    height: 35vh;
-    width: 40vw;
-    top: calc((100vh - 35vh)/2 + 6vh);
-    left: calc((100vw - 40vw)/2);
+    height: 40vh;
+    width: 47vw;
+    top: calc((100vh - 40vh)/2 + 6vh);
+    left: calc((100vw - 47vw)/2);
     position: absolute;
     /* background-color: black; */
     /* border: 2px solid red; */
@@ -185,7 +185,7 @@ label {
 }
 
 .modal-filters{
-    width: 24%;
+    width: 27%;
     height: 17%;
     border-radius: 0.5rem;
     display: flex;
@@ -201,7 +201,7 @@ label {
 }
 
 .capacity-filters{
-    width: 30%;
+    width: 35%;
     height: 17%;
     border-radius: 0.5rem;
     display: flex;
@@ -210,6 +210,22 @@ label {
 }
 
 .cap_desc{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.vaccine-filters{
+    width: 27%;
+    height: 17%;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vac_name{
     font-family: sans-serif;
     font-weight: bold;
     font-size: 1.4rem;
@@ -315,6 +331,15 @@ label {
     .age_cat{
         font-size: 1rem;
     }
+
+    .modal-container{
+        width: 60vw;
+        left: calc((100vw - 60vw)/2);
+    }
+
+    .vac_name{
+        font-size: 1.2rem;
+    }
 }
 
 @media only screen and (max-width: 970px) {
@@ -363,10 +388,6 @@ label {
    .age-container{
        height: 3rem;
        width: 100%;
-   }
-
-   .cap_desc{
-       font-size: 1rem;
    }
 
     .info-container{
@@ -433,8 +454,9 @@ label {
 
 @media only screen and (max-width: 430px) {
     .modal-container{
-        width: 80vw;
-        left: calc((100vw - 80vw)/2);
+        width: 88vw;
+        top: 52vh;
+        left: calc((100vw - 88vw)/2);
     }
 
     .title{
@@ -451,11 +473,23 @@ label {
         font-size: 1.4rem;
     }
 
-    .modal-container{
-        top: 52vh;
+    .capacity-filters{
+        width: 32%;
     }
 
-    .capacity-filters{
-        width: 29%;
+    .vac_name{
+        font-size: 0.8rem;
+    }
+
+    .age_desc{
+        font-size: 1rem;
+    }
+
+    .cap_desc{
+        font-size: 1rem;
+    }
+
+    .pin-dist{
+        font-size: 1rem;
     }
 }
