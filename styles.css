@@ -52,16 +52,15 @@ body{
 
 /* state selection */
 .select-container{
-    width: 55%;
+    width: 47%;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .select{
-    width: 25%;
+    width: 26%;
     height: 2rem;
     cursor: pointer;
 	border-radius: 5px;
@@ -70,7 +69,7 @@ body{
 
 /* district selection */
 .district-select{
-    width: 25%;
+    width: 26%;
     height: 2rem;
     cursor: pointer;
 	border-radius: 5px;
@@ -99,7 +98,7 @@ body{
     display: flex;
     gap: 1rem;
     align-items: center;
-    width: 35%;
+    width: 41%;
 }
 
 #start{
@@ -114,7 +113,7 @@ label {
     display: block;
     color: white;
     font: 1rem 'Fira Sans', sans-serif;
-    width: 33%;
+    width: 40%;
 }
 
 .age-container{
@@ -134,6 +133,30 @@ label {
 }
 
 .age_cat{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    margin: 0;
+}
+
+.pr-container{
+    height: 70%;
+    width: 9%;
+    background-color: rgb(89, 87, 87);
+    border-radius: 0.3rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.pr-container:hover{
+    background-color: rgb(62, 61, 61);
+}
+
+.pr{
     font-family: sans-serif;
     font-weight: bold;
     font-size: 1.3rem;
@@ -305,16 +328,6 @@ label {
     color:lightslategray;
 }
 
-@media only screen and (max-width: 1360px) {
-    .title{
-        font-size: 1.7rem;
-    }
-
-    label{
-        font-size: 0.9rem;
-    }
-}
-
 @media only screen and (max-width: 1145px) {
     .title{
         font-size: 1.5rem;
@@ -329,7 +342,11 @@ label {
     }
 
     .age_cat{
-        font-size: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .pr{
+        font-size: 1.2rem;
     }
 
     .modal-container{
@@ -346,7 +363,7 @@ label {
    .header-container{
        flex-direction: column;
        justify-content: space-around;
-       height: 25vh;
+       height: 29vh;
    }
 
    .heading-container{
@@ -382,11 +399,16 @@ label {
     }
 
     .main-container{
-       min-height: 75vh;
+       min-height: 71vh;
    }
 
    .age-container{
-       height: 3rem;
+       height: 2.5rem;
+       width: 100%;
+   }
+
+   .pr-container{
+       height: 2.5rem;
        width: 100%;
    }
 
@@ -414,19 +436,20 @@ label {
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
-        height: 10rem;
+        margin-top: 0.2rem;
+        height: 9rem;
     }
 
     .select{
-        width: 70%;
+        width: 100%;
     }
 
     .district-select{
-        width: 70%;
+        width: 100%;
     }
 
     .date-container{
-        width: 70%;
+        width: 100%;
         padding-left: 0;
     }
 
@@ -444,15 +467,27 @@ label {
     }
 
     label{
-        font-size: 1rem;
+        font-size: 0.8rem;
+        width: 29%;
     }
 
     .age-container{
         height: 2rem;
     }
+
+    .pr-container{
+        height: 2rem;
+    }
 }
 
 @media only screen and (max-width: 430px) {
+    .header-container{
+        height: 40vh;
+    }
+
+    .main-container{
+        min-height: 60vh;
+    }
     .modal-container{
         width: 88vw;
         top: 52vh;

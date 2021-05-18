@@ -6,6 +6,7 @@ let inputPin = document.querySelector("#input-pin");
 let pinDistContainer = document.querySelector(".pin-dist_container");
 let pinDist = document.querySelector(".pin-dist");
 let addBtn  = document.querySelector(".add");
+let pauseResumeBtn = document.querySelector(".pr-container");
 
 let mainContainer = document.querySelector(".main-container");
 let modalContainer = document.querySelector(".modal-container")
@@ -22,9 +23,26 @@ let age_param = null;
 let cap_param = "Dose 1";
 let vac_param = null;
 let pinFlag = false;
+let prFlag = false;
+let timer;
 let newDate;
 let pincode;
 let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions";
+
+pauseResumeBtn.addEventListener("click", function(){
+    if(prFlag === false){
+        let textElem = pauseResumeBtn.children[0];
+        textElem.innerText = "Resume";
+        timer.pause();
+        pauseResumeBtn.classList.add("active");
+    }else{
+        let textElem = pauseResumeBtn.children[0];
+        textElem.innerText = "Pause";
+        timer.resume();
+        pauseResumeBtn.classList.remove("active");
+    }
+    prFlag = !prFlag;
+})
 
 addBtn.addEventListener("click", function(){
     if(flag === false){
@@ -52,10 +70,6 @@ for(let i=0; i<modalFilters.length; i++){
             age_param = null;
         }
         modalFilters[i].classList.add("border");
-        if(newDate && (district_id || pincode)){
-            console.log("fetching...");
-            getData(mainContainer);
-        }
     })
 }
 
@@ -130,6 +144,15 @@ selectDate.addEventListener("change", function(){
     console.log(newDate);
     
     h1.style.display = "none";
+
+    let textElem = pauseResumeBtn.children[0];
+
+    if(prFlag){
+        textElem.innerText = "Pause";
+        timer.resume();
+        pauseResumeBtn.classList.remove("active");
+        prFlag = false;
+    }
 
     if(newDate && (district_id || pincode)){
         console.log("fetching...");
@@ -238,7 +261,43 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
     mainContainer.appendChild(ticketContainer);
 }
 
-setInterval(() => {
+function IntervalTimer(callback, interval) {
+    let timerId, startTime, remaining = 0;
+    let state = 0; //  0 = idle, 1 = running, 2 = paused, 3= resumed
+
+    this.pause = function () {
+        if (state != 1) return;
+
+        remaining = interval - (new Date() - startTime);
+        window.clearInterval(timerId);
+        state = 2;
+        console.log("paused!!")
+    };
+
+    this.resume = function () {
+        if (state != 2) return;
+
+        state = 3;
+        window.setTimeout(this.timeoutCallback, remaining);
+        console.log("resume!!")
+    };
+
+    this.timeoutCallback = function () {
+        if (state != 3) return;
+
+        callback();
+
+        startTime = new Date();
+        timerId = window.setInterval(callback, interval);
+        state = 1;
+    };
+
+    startTime = new Date();
+    timerId = window.setInterval(callback, interval);
+    state = 1;
+}
+
+timer = new IntervalTimer(() => {
     if(newDate && (district_id || pincode)){
         getData(mainContainer)
     }
