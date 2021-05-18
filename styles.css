@@ -489,8 +489,9 @@ label {
         min-height: 60vh;
     }
     .modal-container{
+        height: 32vh;
         width: 88vw;
-        top: 52vh;
+        top: 56vh;
         left: calc((100vw - 88vw)/2);
     }
 
@@ -499,13 +500,14 @@ label {
    }
 
    .info-container{
-        top: 36vh;
+        height: 13vh;
         width: 47vw;
+        top: 42vh;
         left: 28vw;
     }
 
     .z-dose{
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     .capacity-filters{
