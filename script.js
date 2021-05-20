@@ -29,6 +29,14 @@ let newDate;
 let pincode;
 let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions";
 
+mainContainer.addEventListener("click", function(e){
+    if(e.target == e.currentTarget){
+        addBtn.classList.remove("active");
+        modalContainer.style.display = "none";
+        flag = false;
+    }
+})
+
 pauseResumeBtn.addEventListener("click", function(){
     if(prFlag === false){
         let textElem = pauseResumeBtn.children[0];
