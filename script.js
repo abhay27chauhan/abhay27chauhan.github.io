@@ -172,7 +172,7 @@ function getData(mainContainer){
     infoContainer.style.display = "none";
     
     mainContainer = document.querySelector(".main-container");
-    if(mainContainer.children.length > 0){
+    if(mainContainer.children.length > 4){
         let tContainer = document.querySelectorAll(".ticket-container");
         for(let i=0; i<tContainer.length; i++){
             mainContainer.removeChild(tContainer[i])
