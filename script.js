@@ -16,18 +16,19 @@ let capOptions = document.querySelectorAll(".capacity-filters");
 let vacOptions = document.querySelectorAll(".vaccine-filters");
 let audio = document.querySelector("#audio_id");
 let h1 = document.querySelector(".notice");
+let switchBtn = document.querySelector(".offscreen");
 
-let colors = ["lightpink", "lightblue", "lightgreen", "black"]
 let flag = false;
 let age_param = null;
 let cap_param = "Dose 1";
 let vac_param = null;
 let pinFlag = false;
 let prFlag = false;
+let fee_type = "Free";
 let timer;
 let newDate;
 let pincode;
-let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions";
+let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public";
 
 mainContainer.addEventListener("click", function(e){
     if(e.target == e.currentTarget){
@@ -136,6 +137,17 @@ pinDistContainer.addEventListener("click", function(){
     infoContainer.style.display = "none";
 })
 
+switchBtn.addEventListener("change", function(){
+    if(switchBtn.checked == true){
+        fee_type = switchBtn.getAttribute("data-on");
+    }else{
+        fee_type = switchBtn.getAttribute("data-off");
+    }
+
+    let h2 = document.querySelector(".fee-type h2");
+    h2.innerText = fee_type;
+})
+
 inputPin.addEventListener("blur", function(){
     pincode = inputPin.value;
     console.log(pincode)
@@ -189,6 +201,8 @@ function getData(mainContainer){
         .then(obj => {
             let arr = obj["centers"];
 
+            arr = arr.filter(obj => obj["fee_type"] == fee_type);
+
             for(let i=0; i<arr.length; i++){
                 let arrOfSessions = [];
 
@@ -226,13 +240,13 @@ function getData(mainContainer){
                         let state_name = arr[i]["state_name"];
                         let district_name = arr[i]["district_name"]
                         let center_name = arr[i]["name"];
+                        let fee = fee_type;
                         let date = arrOfSessions[j]["date"]
                         let age = arrOfSessions[j]["min_age_limit"];
                         let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
                         let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
 
-                        let cColor = colors[Math.floor(Math.random() * colors.length)];
-                        createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, cColor);
+                        createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, fee);
                     }
                 }
                 
@@ -248,17 +262,18 @@ function getData(mainContainer){
         });
 }
 
-function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, cColor){
+function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age){
 
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
     
-    ticketContainer.innerHTML = `<div class="ticket-color ${cColor}"></div>
+    ticketContainer.innerHTML = `
         <div class="ticket_sub-container">
            <p><strong>Vaccine Name: </strong> ${vName}</p>
             <p><strong>No. of ${cap_param}: </strong>  ${dose1 ? dose1 : dose2}</p>
             <p><strong>Date: </strong> ${date}</p>
             <p><strong>Age: </strong> ${age}</p>
+            <p><strong>Fee Type: </strong> ${fee_type}</p>
             <p><strong>Pincode: </strong> ${pincode}</p>
             <p><strong>Center Name: </strong> ${center_name}</p>
             <p><strong>State Name: </strong> ${state_name}</p>
