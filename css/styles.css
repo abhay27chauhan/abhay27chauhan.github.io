@@ -7,19 +7,7 @@ body{
 }
 
 .lightpink{
-    background-color: pink;
-}
-
-.lightgreen{
-    background-color: green;
-}
-
-.lightblue{
-    background-color: blue;
-}
-
-.black{
-    background-color: black;
+    background-color: rgb(254, 163, 178);
 }
 
 /* Header */
@@ -512,6 +500,10 @@ input[type='checkbox']:checked + .switch {
     .modal-container{
         top: 50vh;
     }
+
+    .fee-type {
+        width: 27%;
+    }
 }
 
 @media only screen and (max-width: 671px) {
@@ -619,5 +611,17 @@ input[type='checkbox']:checked + .switch {
 
     .pin-dist{
         font-size: 1rem;
+    }
+
+    .fee-type {
+        width: 35%;
+    }
+
+    .fee-type h2{
+        font-size: 1.2rem;
+    }
+
+    .switch{
+        margin-top: 0.16rem;
     }
 }

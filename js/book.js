@@ -1,6 +1,5 @@
 let headerContainer = document.querySelector(".book_header-container");
-let beneficiaries = [];
-let 
+let beneficiaries;
 
 function renderUI(vName, pincode, center_name, dose){
     let h2 = document.createElement("h2");
@@ -12,8 +11,10 @@ function renderUI(vName, pincode, center_name, dose){
     inputContainer.innerHTML = `<span class="prefix">+91</span>
         <input class="mbno" type="tel" placeholder="Enter Your Registered Mobile Number" />`
 
+    let topContainer = document.querySelector(".top-container")
+
     headerContainer.appendChild(h2);
-    document.body.appendChild(inputContainer);
+    topContainer.appendChild(inputContainer);
 
     let inputElem = inputContainer.querySelector(".mbno");
 
@@ -56,7 +57,8 @@ function changeUI(txnId){
     inputContainer.innerHTML = `
         <input class="otp" type="text" placeholder="Enter Your OTP Number" />`
     
-    document.body.appendChild(inputContainer);
+    let topContainer = document.querySelector(".top-container")
+    topContainer.appendChild(inputContainer);
     let inputElem = inputContainer.querySelector(".otp");
 
     inputElem.addEventListener("keyup", function(){
@@ -86,7 +88,7 @@ function confirmOtp(otp, txnId){
         return data;
     })
     .then(data => fetchCaptcha(data["token"]))
-    .then((captcha) => showOnUI(captcha));
+    .catch(err => alert("some error occured"))
 }
 
 function fetchBene(token){
@@ -101,7 +103,9 @@ function fetchBene(token){
         }
     })
     .then(response => response.json())
-    .then(data => beneficiaries = data["beneficiaries"])
+    .then(data => {
+        beneficiaries = data["beneficiaries"]
+    })
     .catch(err => alert("unable to fetch beneficiaries"))
 }
 
@@ -117,12 +121,58 @@ function fetchCaptcha(token){
         }
     })
     .then(response => response.json())
-    .then(data => data["captcha"])
-    .catch(err => alert("unable to fetch Captcha"))
+    .then(data => showOnUI(data))
+    .catch(err => alert(err.message))
 }
 
-function showOnUI(captcha){
+function showOnUI(captchaObj){
+    console.log("showing data..")
+    let obj = processData(beneficiaries, captchaObj);
+
     let inputContainer = document.querySelector(".input-box");
     inputContainer.remove();
+
+    let mainContainer = document.createElement("div");
+    mainContainer.setAttribute("class", "main-container");
+
+    mainContainer.innerHTML = `<div class="main-container">
+        <p class="action">Beneficiaries</p>
+        <div class="item">
+            <input type="checkbox" name="checkbox" value="Person1">
+            <p>${obj["p0"]["bName"]}</p>
+        </div>
+        <div class="item">
+            <input type="checkbox" name="checkbox" value="Person2">
+            <p>${obj["p1"]["bName"]}</p>
+        </div>
+        <div class="item">
+            <input type="checkbox" name="checkbox" value="Person3">
+            <p>${obj["p2"]["bName"]}</p>
+        </div>
+        <div class="item">
+            <input type="checkbox" name="checkbox" value="Person4">
+            <p>${obj["p3"]["bName"]}</p>
+        </div>
+    </div>`
+
+    let topContainer = document.querySelector(".top-container")
+    topContainer.appendChild(mainContainer)
+
 }
 
+function processData(beneficiaries, captchaObj){
+    let obj = {};
+    obj["captcha"] = captchaObj["captcha"];
+
+    for(let i=0; i<beneficiaries.length; i++){
+        obj[`p${i}`] = {}
+        obj[`p${i}`]["bName"] = beneficiaries[i]["name"];
+        obj[`p${i}`]["status"] = beneficiaries[i]["vaccination_status"];
+        obj[`p${i}`]["vaccine"] = beneficiaries[i]["vaccine"];
+        obj[`p${i}`]["dose1_date"] = beneficiaries[i]["dose1_date"];
+        obj[`p${i}`]["dose2_date"] = beneficiaries[i]["dose2_date"];
+        obj[`p${i}`]["beneficiary_reference_id"] = beneficiaries[i]["beneficiary_reference_id"];
+    }
+
+    return obj;
+}

@@ -7,6 +7,14 @@ body{
     overflow-x: hidden;
 }
 
+.top-container{
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
 .book_header-container{
     position: fixed;
     top: 1rem;
@@ -64,10 +72,10 @@ body{
 
 .main-container{
   position: fixed;
-  top: 8rem;
+  top: 7rem;
   left: calc( (100vw - 90vw)/2 );
   width: 90vw;
-  height: 37vh;
+  height: 43vh;
   border: 2px solid green;
   color: white;
 }
@@ -79,23 +87,75 @@ li{
 .action{
   font-size: 1.5rem;
   font-family: sans-serif;
-  height: 2rem;
+  height: 3.5rem;
   background-color: green;
   width: 60%;
+  color: white;
   margin: 0 auto;
   text-align: center;
 }
 
-.task{
-  background-color: #2f679c;
-  margin-top: 0.8rem; 
-  height: 3rem;  
-  font-family: sans-serif;
-  padding-top: 0.8rem;
-  padding-left: 1rem;
+.item {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #F1F1F1;
 }
 
-.task-list{
-  padding-left: 1rem;
-  padding-right: 1rem;
+.item:last-child {
+  border-bottom: 0;
+}
+
+input:checked+p {
+  background-color: green;
+  color: white;
+}
+
+input[type="checkbox"] {
+  margin: 20px;
+}
+
+p {
+  margin: 0;
+  font-family: sans-serif;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 200;
+  color: #00204a;
+}
+
+@media only screen and (max-width: 770px) {
+  .book_header-container{
+    height: 10vh;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .input-box{
+    width: 25rem;
+    left: calc( (100vw - 25rem)/2 );
+  }
+
+  .book_header-container{
+    height: 13vh;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .input-box{
+    width: 18.5rem;
+    left: calc( (100vw - 18.5rem)/2 );
+  }
+
+  .input-box .prefix{
+    font-size: 15px;
+  }
+
+  .input-box input{
+    font-size: 15px;
+  }
+
+  .book_header-container{
+    height: 17vh;
+  }
 }
