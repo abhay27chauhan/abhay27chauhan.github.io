@@ -357,15 +357,62 @@ input[type='checkbox']:checked + .switch {
     width:20rem;
     background-color:white;
     border-radius: 0.6rem;
+    padding: 0.3rem;
     box-shadow: 0px 12px 7px 3px rgba(0, 0, 0, .2);
 }
 
 .ticket_sub-container{
-    height: 100%;
+    height: 92%;
     width: 100%;
     padding-left:1rem;
     font-family: sans-serif;
     overflow-y: auto;
+}
+
+.book-now{
+    height: 8%;
+    width: 100%;
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.book-now:hover{
+    background-color: #f44336;
+    color: white;
+}
+
+.book-now span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  
+}
+
+.book-now span:after {
+  content: '\00bb';
+  font-size: 2rem;
+  position: absolute;
+  opacity: 0;
+  top: -14.1px;
+  right: -18px;
+  transition: 0.3s;
+}
+
+.book-now:hover span {
+  padding-right: 25px;
+}
+
+.book-now:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 
 .ticket-id{

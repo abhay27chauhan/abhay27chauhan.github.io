@@ -1,0 +1,101 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+.book_header-container{
+    position: fixed;
+    top: 1rem;
+    left: calc( (100vw - 90vw)/2 );
+    text-align: center;
+    background-color: gray;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    height: 6vh;
+    width: 90vw;
+    border-radius: 6px;
+    padding-top: 0.5rem;
+}
+
+.book-header{
+    margin: 0px;
+    font-family: sans-serif;
+    color: white;
+}
+
+.input-box {
+    position: fixed;
+    top: calc( (100vh - 4rem)/2 );
+    left: calc( (100vw - 32rem)/2 );
+    display: flex;
+    align-items: center;
+    width: 32rem;
+    height: 4rem;
+    background: #fff;
+    border: 1px solid #a0a0a0;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+.input-box .prefix {
+  font-weight: 300;
+  font-size: 17px;
+  color: #999;
+}
+
+.input-box input {
+  flex-grow: 1;
+  font-size: 17px;
+  background: #fff;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.input-box:focus-within {
+  border-color: #777;
+}
+
+.main-container{
+  position: fixed;
+  top: 8rem;
+  left: calc( (100vw - 90vw)/2 );
+  width: 90vw;
+  height: 37vh;
+  border: 2px solid green;
+  color: white;
+}
+
+li{
+  list-style: none;
+}
+
+.action{
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  height: 2rem;
+  background-color: green;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.task{
+  background-color: #2f679c;
+  margin-top: 0.8rem; 
+  height: 3rem;  
+  font-family: sans-serif;
+  padding-top: 0.8rem;
+  padding-left: 1rem;
+}
+
+.task-list{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/book.css">
+    <title>Book Your Vaccine</title>
+</head>
+<body>
+    <div class="book_header-container"></div>
+    <!-- <div class="main-container">
+        <p class="action">Beneficiaries</p>
+        <ul class="task-list">
+            <li class="task">I am Task1</li>
+            <li class="task">I am Task2</li>
+            <li class="task">I am Task3</li>
+            <li class="task">I am Task3</li>
+        </ul>
+    </div> -->
+    <script src="js/book.js"></script>
+    <script>
+        let para = new URLSearchParams(window.location.search);
+        let vName = para.get("vName");
+        let pincode = para.get("pincode");
+        let center_name = para.get("center_name");
+        let dose_type = para.get("dose_type");
+
+        renderUI(vName, pincode, center_name, dose_type);
+    </script>
+</body>
+</html>
