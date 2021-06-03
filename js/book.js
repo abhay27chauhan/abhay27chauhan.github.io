@@ -1,5 +1,4 @@
 let headerContainer = document.querySelector(".book_header-container");
-let beneficiaries;
 
 function renderUI(vName, pincode, center_name, dose){
     let h2 = document.createElement("h2");
@@ -83,12 +82,9 @@ function confirmOtp(otp, txnId){
         }
     })
     .then(response => response.json())
-    .then(data => {
-        fetchBene(data["token"]);
-        return data;
-    })
-    .then(data => fetchCaptcha(data["token"]))
-    .then(data => showOnUI(data))
+    .then(data => fetchBene(data["token"]))
+    .then(obj => fetchCaptcha(obj))
+    .then(dataObj => showOnUI(dataObj))
     .catch(err => alert(err.message))
 }
 
@@ -106,34 +102,41 @@ function fetchBene(token){
         })
         .then(response => response.json())
         .then(data => {
-            beneficiaries = data["beneficiaries"]
-            resolve();
+            let obj = {}
+            obj["beneficiaries"] = data["beneficiaries"]
+            obj["token"] = token
+            return obj
         })
+        .then((obj) => resolve(obj))
         .catch(err => reject(err))
     })
 }
 
-function fetchCaptcha(token){
+function fetchCaptcha(obj){
     console.log("fetching captcha....")
     return new Promise((resolve, reject) => {
         fetch("https://cw.r41.io/booker/getCaptcha", {
             method: "POST",
             body: JSON.stringify({
-                token: token,
+                token: obj["token"],
             }),
             headers: {
                 "Content-type": "application/json"
             }
         })
         .then(response => response.json())
-        .then(data => resolve(data))
+        .then(data => {
+            obj["captcha"] = data["captcha"];
+            return obj
+        })
+        .then(obj => resolve(obj))
         .catch(err => reject(err))
     })
 }
 
-function showOnUI(captchaObj){
+function showOnUI(dataObj){
     console.log("showing data..")
-    let obj = processData(beneficiaries, captchaObj);
+    let obj = processData(dataObj["beneficiaries"], dataObj["captcha"]);
 
     let inputContainer = document.querySelector(".input-box");
     inputContainer.remove();
@@ -166,9 +169,9 @@ function showOnUI(captchaObj){
 
 }
 
-function processData(beneficiaries, captchaObj){
+function processData(beneficiaries, captcha){
     let obj = {};
-    obj["captcha"] = captchaObj["captcha"];
+    obj["captcha"] = captcha;
 
     for(let i=0; i<beneficiaries.length; i++){
         obj[`p${i}`] = {}
