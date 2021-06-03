@@ -36,7 +36,7 @@ function generateOtp(mbno){
             mobile: Number(mbno)
         }),
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json"
         }
     })
     .then(response => response.json())
@@ -44,7 +44,7 @@ function generateOtp(mbno){
         let txnId = data["txnId"]
         changeUI(txnId);
     })
-    .catch(err => alert("Some error occured. Type Again!!"));
+    .catch(err => alert(err.message));
 }
 
 function changeUI(txnId){
@@ -79,7 +79,7 @@ function confirmOtp(otp, txnId){
             txnId: txnId
         }),
         headers: {
-            "Content-type": "application/json; charset=UTF-8"
+            "Content-type": "application/json"
         }
     })
     .then(response => response.json())
@@ -88,41 +88,47 @@ function confirmOtp(otp, txnId){
         return data;
     })
     .then(data => fetchCaptcha(data["token"]))
-    .catch(err => alert("some error occured"))
+    .then(data => showOnUI(data))
+    .catch(err => alert(err.message))
 }
 
 function fetchBene(token){
     console.log("fetching beneficiary....")
-    fetch("https://cw.r41.io/booker/bene", {
-        method: "POST",
-        body: JSON.stringify({
-            token: token,
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
+    return new Promise((resolve, reject) => {
+        fetch("https://cw.r41.io/booker/bene", {
+            method: "POST",
+            body: JSON.stringify({
+                token: token,
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            beneficiaries = data["beneficiaries"]
+            resolve();
+        })
+        .catch(err => reject(err))
     })
-    .then(response => response.json())
-    .then(data => {
-        beneficiaries = data["beneficiaries"]
-    })
-    .catch(err => alert("unable to fetch beneficiaries"))
 }
 
 function fetchCaptcha(token){
     console.log("fetching captcha....")
-    fetch("https://cw.r41.io/booker/getCaptcha", {
-        method: "POST",
-        body: JSON.stringify({
-            token: token,
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
+    return new Promise((resolve, reject) => {
+        fetch("https://cw.r41.io/booker/getCaptcha", {
+            method: "POST",
+            body: JSON.stringify({
+                token: token,
+            }),
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => resolve(data))
+        .catch(err => reject(err))
     })
-    .then(response => response.json())
-    .then(data => showOnUI(data))
-    .catch(err => alert(err.message))
 }
 
 function showOnUI(captchaObj){

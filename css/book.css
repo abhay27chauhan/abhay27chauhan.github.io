@@ -23,7 +23,7 @@ body{
     background-color: gray;
     margin: 0 auto;
     margin-top: 0.5rem;
-    height: 6vh;
+    height: 9vh;
     width: 90vw;
     border-radius: 6px;
     padding-top: 0.5rem;
@@ -75,7 +75,7 @@ body{
   top: 7rem;
   left: calc( (100vw - 90vw)/2 );
   width: 90vw;
-  height: 43vh;
+  height: 45vh;
   border: 2px solid green;
   color: white;
 }
@@ -139,6 +139,11 @@ p {
   .book_header-container{
     height: 13vh;
   }
+
+  .main-container{
+    top: 10rem;
+    height: 47vh;
+  }
 }
 
 @media only screen and (max-width: 380px) {
@@ -156,6 +161,10 @@ p {
   }
 
   .book_header-container{
-    height: 17vh;
+    height: 21vh;
+  }
+
+  .main-container{
+    top: 12rem;
   }
 }
