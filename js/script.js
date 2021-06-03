@@ -28,7 +28,7 @@ let fee_type = "Free";
 let timer;
 let newDate;
 let pincode;
-let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions";
+let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public";
 
 mainContainer.addEventListener("click", function(e){
     if(e.target == e.currentTarget){
@@ -196,70 +196,75 @@ function getData(mainContainer){
 
     let fullUrl = pinFlag ? `${initialUrl}/calendarByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
 
-    fetch(fullUrl)  // returns promise
-        .then(response => response.json())
-        .then(obj => {
-            let arr = obj["centers"];
+    fetch(fullUrl, {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
+    }) 
+    .then(response => response.json())
+    .then(obj => {
+        let arr = obj["centers"];
 
-            arr = arr.filter(obj => obj["fee_type"] == fee_type);
+        arr = arr.filter(obj => obj["fee_type"] == fee_type);
 
-            for(let i=0; i<arr.length; i++){
-                let arrOfSessions = [];
+        for(let i=0; i<arr.length; i++){
+            let arrOfSessions = [];
 
-                if(arr.length > 0){
-                    arrOfSessions = arr[i]["sessions"];
+            if(arr.length > 0){
+                arrOfSessions = arr[i]["sessions"];
 
-                    if(age_param !== null && arrOfSessions.length > 0){
-                        arrOfSessions = arrOfSessions.filter(obj => obj["min_age_limit"] == age_param)
-                    }
-
-                    if(arrOfSessions.length > 0){
-                        arrOfSessions = arrOfSessions.filter(obj => { 
-                            return obj["available_capacity"] > 0
-                        })
-                    }
-
-                    if(cap_param == "Dose 1" && arrOfSessions.length > 0){
-                        arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose1"] > 0)
-                    }else if(cap_param == "Dose 2" && arrOfSessions.length > 0){
-                        arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose2"] > 0)
-                    }
-
-                    if(vac_param !== null && arrOfSessions.length > 0){
-                        arrOfSessions = arrOfSessions.filter(obj => obj["vaccine"] == vac_param)
-                    }
-
-                    if(arrOfSessions.length > 0){
-                        audio.play();
-                    }
-
-                    for(let j=0; j<arrOfSessions.length; j++){
-
-                        let vName = arrOfSessions[j]["vaccine"];
-                        let pincode = arr[i]["pincode"]
-                        let state_name = arr[i]["state_name"];
-                        let district_name = arr[i]["district_name"]
-                        let center_name = arr[i]["name"];
-                        let fee = fee_type;
-                        let date = arrOfSessions[j]["date"]
-                        let age = arrOfSessions[j]["min_age_limit"];
-                        let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
-                        let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
-
-                        createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, fee);
-                    }
+                if(age_param !== null && arrOfSessions.length > 0){
+                    arrOfSessions = arrOfSessions.filter(obj => obj["min_age_limit"] == age_param)
                 }
-                
+
+                if(arrOfSessions.length > 0){
+                    arrOfSessions = arrOfSessions.filter(obj => { 
+                        return obj["available_capacity"] > 0
+                    })
+                }
+
+                if(cap_param == "Dose 1" && arrOfSessions.length > 0){
+                    arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose1"] > 0)
+                }else if(cap_param == "Dose 2" && arrOfSessions.length > 0){
+                    arrOfSessions = arrOfSessions.filter(obj => obj["available_capacity_dose2"] > 0)
+                }
+
+                if(vac_param !== null && arrOfSessions.length > 0){
+                    arrOfSessions = arrOfSessions.filter(obj => obj["vaccine"] == vac_param)
+                }
+
+                if(arrOfSessions.length > 0){
+                    audio.play();
+                }
+
+                for(let j=0; j<arrOfSessions.length; j++){
+
+                    let vName = arrOfSessions[j]["vaccine"];
+                    let pincode = arr[i]["pincode"]
+                    let state_name = arr[i]["state_name"];
+                    let district_name = arr[i]["district_name"]
+                    let center_name = arr[i]["name"];
+                    let fee = fee_type;
+                    let date = arrOfSessions[j]["date"]
+                    let age = arrOfSessions[j]["min_age_limit"];
+                    let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
+                    let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
+
+                    createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, fee);
+                }
             }
-            let ticketContainer = document.querySelector(".ticket-container");
-            if(!ticketContainer){
-                infoContainer.style.display = "flex";
-            }
-            console.log(obj["centers"])
-        })
-        .catch(error => {
-            console.log(error)
-        });
+            
+        }
+        let ticketContainer = document.querySelector(".ticket-container");
+        if(!ticketContainer){
+            infoContainer.style.display = "flex";
+        }
+        console.log(obj["centers"])
+    })
+    .catch(error => {
+        console.log(error)
+    });
 }
 
 function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age){
