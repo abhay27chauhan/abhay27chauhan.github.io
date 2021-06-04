@@ -239,6 +239,6 @@ function bookVaccine(obj, beneficiaries, token){
         }
     })
     .then(response => response.json())
-    .then(data => alert(data.error))
+    .then(data => alert(data.appointment_id || data.error))
     .catch(err => alert(err.message));
 }
