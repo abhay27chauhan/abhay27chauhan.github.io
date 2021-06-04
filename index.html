@@ -93,7 +93,7 @@
         </div>
     </div>
     <script>
-        function handleBook(bookBtn, vName, pincode, center_name, dose_type) {
+        function handleBook(bookBtn, vName, pincode, center_name, dose_type, session_id) {
             bookBtn.addEventListener("click", function () {
                 location.assign("book.html");
 
@@ -102,6 +102,8 @@
                 para.append("pincode", pincode);
                 para.append("center_name", center_name);
                 para.append("dose_type", dose_type);
+                para.append("session_id", session_id);
+                para.append("center_id", center_id);
                 location.href = "https://abhay27chauhan.github.io/book.html?" + para.toString();
             })
 

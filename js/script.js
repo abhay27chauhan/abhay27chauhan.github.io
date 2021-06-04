@@ -245,13 +245,14 @@ function getData(mainContainer){
                     let state_name = arr[i]["state_name"];
                     let district_name = arr[i]["district_name"]
                     let center_name = arr[i]["name"];
-                    let fee = fee_type;
                     let date = arrOfSessions[j]["date"]
                     let age = arrOfSessions[j]["min_age_limit"];
                     let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
                     let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
+                    let session_id = arrOfSessions[j]["session_id"];
+                    let center_id = arrOfSessions[j]["center_id"]
 
-                    createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, fee);
+                    createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, session_id, center_id);
                 }
             }
             
@@ -267,7 +268,7 @@ function getData(mainContainer){
     });
 }
 
-function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age){
+function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, session_id){
 
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
@@ -289,7 +290,7 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
     mainContainer.appendChild(ticketContainer);
 
     let bookBtn = ticketContainer.querySelector(".book-now")
-    handleBook(bookBtn, vName, pincode, center_name, cap_param);
+    handleBook(bookBtn, vName, pincode, center_name, cap_param, session_id, center_id);
 }
 
 function IntervalTimer(callback, interval) {

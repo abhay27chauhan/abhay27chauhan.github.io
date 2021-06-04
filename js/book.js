@@ -1,5 +1,15 @@
 let headerContainer = document.querySelector(".book_header-container");
 
+let para = new URLSearchParams(window.location.search);
+let vName = para.get("vName");
+let pincode = para.get("pincode");
+let center_name = para.get("center_name");
+let dose_type = para.get("dose_type");
+let session_id = para.get("session_id");
+let center_id = para.get("center_id");
+
+renderUI(vName, pincode, center_name, dose_type);
+
 function renderUI(vName, pincode, center_name, dose){
     let h2 = document.createElement("h2");
     h2.setAttribute("class", "book-header");
@@ -43,7 +53,7 @@ function generateOtp(mbno){
         let txnId = data["txnId"]
         changeUI(txnId);
     })
-    .catch(err => alert(err.message));
+    .catch(err => alert(`${err.message}. Refresh or try directly on cowin website`));
 }
 
 function changeUI(txnId){
@@ -85,7 +95,7 @@ function confirmOtp(otp, txnId){
     .then(data => fetchBene(data["token"]))
     .then(obj => fetchCaptcha(obj))
     .then(dataObj => showOnUI(dataObj))
-    .catch(err => alert(err.message))
+    .catch(err => alert(`${err.message}. Refresh or try directly on cowin website`))
 }
 
 function fetchBene(token){
@@ -138,6 +148,11 @@ function showOnUI(dataObj){
     console.log("showing data..")
     let obj = processData(dataObj["beneficiaries"], dataObj["captcha"]);
 
+    if(obj["p0"] == undefined){
+        console.log("calling fetchBene...");
+        fetchBene(dataObj["token"]);
+    }
+
     let inputContainer = document.querySelector(".input-box");
     inputContainer.remove();
 
@@ -147,31 +162,61 @@ function showOnUI(dataObj){
     mainContainer.innerHTML = `<div class="main-container">
         <p class="action">Beneficiaries</p>
         <div class="item">
-            <input type="checkbox" name="checkbox" value="Person1">
+            <input type="checkbox" name="checkbox" value="${obj["p0"]["beneficiary_reference_id"]}">
             <p>${obj["p0"]["bName"]}</p>
         </div>
         <div class="item">
-            <input type="checkbox" name="checkbox" value="Person2">
+            <input type="checkbox" name="checkbox" value="${obj["p1"]["beneficiary_reference_id"]}">
             <p>${obj["p1"]["bName"]}</p>
         </div>
         <div class="item">
-            <input type="checkbox" name="checkbox" value="Person3">
+            <input type="checkbox" name="checkbox" value="${obj["p2"]["beneficiary_reference_id"]}">
             <p>${obj["p2"]["bName"]}</p>
         </div>
         <div class="item">
-            <input type="checkbox" name="checkbox" value="Person4">
+            <input type="checkbox" name="checkbox" value="${obj["p3"]["beneficiary_reference_id"]}">
             <p>${obj["p3"]["bName"]}</p>
         </div>
     </div>`
 
+    let captchaContainer = document.createElement("div");
+    captchaContainer.setAttribute("class", "captcha-container");
+
+    captchaContainer.innerHTML = `${obj["captcha"]}
+    <input type="text" class="type-captcha">`
+
     let topContainer = document.querySelector(".top-container")
     topContainer.appendChild(mainContainer)
+    topContainer.appendChild(captchaContainer);
 
+    let beneficiaries = [];
+
+    let checkbox = document.querySelectorAll("input[type='checkbox']");
+    for(let i=0; i<checkbox.length; i++){
+        checkbox[i].addEventListener("change", function(){
+            if(this.checked == true){
+                beneficiaries.push(checkbox[i].value);
+            }else{
+                if(beneficiaries.contains(checkbox[i].value)){
+                    beneficiaries = beneficiaries.filter(val => val != checkbox.value);
+                }
+            }
+        })
+    }
+
+    let input = document.querySelector(".type-captcha");
+    input.addEventListener("keydown", function(e){
+        if(e.key == "Enter"){
+            obj["captcha"] = input.value;
+            bookVaccine(obj, beneficiaries, dataObj["token"]);
+        }
+    })
 }
 
 function processData(beneficiaries, captcha){
     let obj = {};
     obj["captcha"] = captcha;
+    obj["slot"] = "10:00AM-11:00AM"
 
     for(let i=0; i<beneficiaries.length; i++){
         obj[`p${i}`] = {}
@@ -184,4 +229,26 @@ function processData(beneficiaries, captcha){
     }
 
     return obj;
+}
+
+function bookVaccine(obj, beneficiaries, token){
+    console.log(beneficiaries);
+    fetch("https://cw.r41.io/booker/schedule", {
+        method: "POST",
+        body: JSON.stringify({
+            beneficiaries,
+            captcha: obj["captcha"],
+            center_id,
+            dose: dose_type,
+            session_id,
+            slot: obj["slot"],
+            token
+        }),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+    .then(response => response.json())
+    .then(data => alert(data.error))
+    .catch(err => alert(err.message));
 }

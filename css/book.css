@@ -124,6 +124,27 @@ p {
   color: #00204a;
 }
 
+.captcha-container{
+  position: fixed;
+  bottom: 7rem;
+  left: calc(( 100vw - 27rem )/2);
+  height: 9rem;
+  width: 27rem;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.type-captcha{
+  height: 36%;
+  width: 60%;
+  font-size: 17px;
+  text-align: center;
+  font-weight: bold;
+}
+
 @media only screen and (max-width: 770px) {
   .book_header-container{
     height: 10vh;
@@ -132,8 +153,8 @@ p {
 
 @media only screen and (max-width: 430px) {
   .input-box{
-    width: 25rem;
-    left: calc( (100vw - 25rem)/2 );
+    width: 23rem;
+    left: calc( (100vw - 23rem)/2 );
   }
 
   .book_header-container{
@@ -144,12 +165,17 @@ p {
     top: 10rem;
     height: 47vh;
   }
+
+  .captcha-container{
+    left: calc(( 100vw - 22rem )/2);
+    width: 22rem;
+  }
 }
 
 @media only screen and (max-width: 380px) {
   .input-box{
-    width: 18.5rem;
-    left: calc( (100vw - 18.5rem)/2 );
+    width: 17rem;
+    left: calc( (100vw - 17rem)/2 );
   }
 
   .input-box .prefix{
@@ -166,5 +192,11 @@ p {
 
   .main-container{
     top: 12rem;
+  }
+
+  .captcha-container{
+    left: calc(( 100vw - 15rem )/2);
+    width: 15rem;
+    height: 8rem;
   }
 }
