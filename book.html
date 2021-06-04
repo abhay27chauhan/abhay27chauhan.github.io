@@ -11,6 +11,19 @@
     <div class="top-container">
         <div class="book_header-container"></div>
     </div>
+    
+    <script>
+        let para = new URLSearchParams(window.location.search);
+        let vName = para.get("vName");
+        let pincode = para.get("pincode");
+        let center_name = para.get("center_name");
+        let dose_type = para.get("dose_type");
+        let session_id = para.get("session_id");
+        let center_id = para.get("center_id");
+    </script>
     <script src="js/book.js"></script>
+    <script>
+        renderUI(vName, pincode, center_name, dose_type);
+    </script>
 </body>
 </html>

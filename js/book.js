@@ -1,15 +1,5 @@
 let headerContainer = document.querySelector(".book_header-container");
 
-let para = new URLSearchParams(window.location.search);
-let vName = para.get("vName");
-let pincode = para.get("pincode");
-let center_name = para.get("center_name");
-let dose_type = para.get("dose_type");
-let session_id = para.get("session_id");
-let center_id = para.get("center_id");
-
-renderUI(vName, pincode, center_name, dose_type);
-
 function renderUI(vName, pincode, center_name, dose){
     let h2 = document.createElement("h2");
     h2.setAttribute("class", "book-header");

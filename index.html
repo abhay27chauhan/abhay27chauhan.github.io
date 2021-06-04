@@ -93,8 +93,9 @@
         </div>
     </div>
     <script>
-        function handleBook(bookBtn, vName, pincode, center_name, dose_type, session_id) {
+        function handleBook(bookBtn, vName, pincode, center_name, dose_type, session_id, center_id) {
             bookBtn.addEventListener("click", function () {
+                console.log("Hello")
                 location.assign("book.html");
 
                 let para = new URLSearchParams();
@@ -104,7 +105,7 @@
                 para.append("dose_type", dose_type);
                 para.append("session_id", session_id);
                 para.append("center_id", center_id);
-                location.href = "https://abhay27chauhan.github.io/book.html?" + para.toString();
+                location.href = "http://127.0.0.1:5500/book.html?" + para.toString();
             })
 
         }
