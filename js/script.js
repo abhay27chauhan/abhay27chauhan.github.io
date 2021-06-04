@@ -250,7 +250,7 @@ function getData(mainContainer){
                     let dose1 = cap_param == "Dose 1" && arrOfSessions[j]["available_capacity_dose1"];
                     let dose2 = cap_param == "Dose 2" && arrOfSessions[j]["available_capacity_dose2"];
                     let session_id = arrOfSessions[j]["session_id"];
-                    let center_id = arrOfSessions[j]["center_id"]
+                    let center_id = arr[i]["center_id"]
 
                     createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, session_id, center_id);
                 }
