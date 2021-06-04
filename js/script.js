@@ -268,7 +268,7 @@ function getData(mainContainer){
     });
 }
 
-function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, session_id){
+function createTicket(mainContainer, vName, pincode, state_name, district_name, dose1, dose2, center_name, date, age, session_id, center_id){
 
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class", "ticket-container");
