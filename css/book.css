@@ -75,7 +75,7 @@ body{
   top: 7rem;
   left: calc( (100vw - 90vw)/2 );
   width: 90vw;
-  height: 45vh;
+  height: 21rem;
   border: 2px solid green;
   color: white;
 }
@@ -126,7 +126,7 @@ p {
 
 .captcha-container{
   position: fixed;
-  bottom: 7rem;
+  top: 34.6rem;
   left: calc(( 100vw - 27rem )/2);
   height: 9rem;
   width: 27rem;
@@ -143,6 +143,33 @@ p {
   font-size: 17px;
   text-align: center;
   font-weight: bold;
+}
+
+.gallery-back{
+  height: 5rem;
+  width: 5rem;
+  position: fixed;
+  bottom: 7%;
+  right: 41px;
+  border-radius: 50%;
+  background-color: rgb(46, 45, 45);
+  color: white;
+  font-family: sans-serif;
+}
+
+.gallery-back:hover{
+  animation: gScaleUp 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes gScaleUp {
+  0%{
+      transform: scale(1);
+  }
+
+  100%{
+      transform: scale(1.1);
+  }
 }
 
 @media only screen and (max-width: 770px) {
@@ -163,12 +190,19 @@ p {
 
   .main-container{
     top: 10rem;
-    height: 47vh;
   }
 
   .captcha-container{
+    bottom: 1.5rem;
     left: calc(( 100vw - 22rem )/2);
     width: 22rem;
+  }
+
+  .gallery-back{
+    height: 3rem;
+    width: 3rem;
+    right: 9px;
+    bottom: 4%;
   }
 }
 
@@ -198,5 +232,11 @@ p {
     left: calc(( 100vw - 15rem )/2);
     width: 15rem;
     height: 8rem;
+  }
+}
+
+@media only screen and (max-height: 595px) {
+  .gallery-back{
+    bottom: -10%;
   }
 }

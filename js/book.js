@@ -1,31 +1,29 @@
 let headerContainer = document.querySelector(".book_header-container");
 
-function renderUI(vName, pincode, center_name, dose){
-    let h2 = document.createElement("h2");
-    h2.setAttribute("class", "book-header");
-    h2.innerText = `vaccine name: ${vName} | pincode: ${pincode} | center name: ${center_name} | dose type: ${dose}`;
+let h2 = document.createElement("h2");
+h2.setAttribute("class", "book-header");
+h2.innerText = `vaccine name: ${vName} | pincode: ${pincode} | center name: ${center_name} | dose type: ${dose_type}`;
 
-    let inputContainer = document.createElement("div");
-    inputContainer.setAttribute("class", "input-box");
-    inputContainer.innerHTML = `<span class="prefix">+91</span>
-        <input class="mbno" type="tel" placeholder="Enter Your Registered Mobile Number" />`
+let inputContainer = document.createElement("div");
+inputContainer.setAttribute("class", "input-box");
+inputContainer.innerHTML = `<span class="prefix">+91</span>
+    <input class="mbno" type="tel" placeholder="Enter Your Registered Mobile Number" />`
 
-    let topContainer = document.querySelector(".top-container")
+let topContainer = document.querySelector(".top-container")
 
-    headerContainer.appendChild(h2);
-    topContainer.appendChild(inputContainer);
+headerContainer.appendChild(h2);
+topContainer.appendChild(inputContainer);
 
-    let inputElem = inputContainer.querySelector(".mbno");
+let inputElem = inputContainer.querySelector(".mbno");
 
-    inputElem.addEventListener("keyup", function(){
-        if(inputElem.value.length == 10){
-            let mbno = inputElem.value
-            inputElem.value = "";
-            inputElem.setAttribute("placeholder", "Requesting Otp...")
-            generateOtp(mbno);
-        }
-    })
-}
+inputElem.addEventListener("keyup", function(){
+    if(inputElem.value.length == 10){
+        let mbno = inputElem.value
+        inputElem.value = "";
+        inputElem.setAttribute("placeholder", "Requesting Otp...")
+        generateOtp(mbno);
+    }
+})
 
 function generateOtp(mbno){
     console.log("making request...")
@@ -149,8 +147,7 @@ function showOnUI(dataObj){
     let mainContainer = document.createElement("div");
     mainContainer.setAttribute("class", "main-container");
 
-    mainContainer.innerHTML = `<div class="main-container">
-        <p class="action">Beneficiaries</p>
+    mainContainer.innerHTML = `<p class="action">Beneficiaries</p>
         <div class="item">
             <input type="checkbox" name="checkbox" value="${obj["p0"]["beneficiary_reference_id"]}">
             <p>${obj["p0"]["bName"]}</p>
@@ -166,8 +163,7 @@ function showOnUI(dataObj){
         <div class="item">
             <input type="checkbox" name="checkbox" value="${obj["p3"]["beneficiary_reference_id"]}">
             <p>${obj["p3"]["bName"]}</p>
-        </div>
-    </div>`
+        </div>`
 
     let captchaContainer = document.createElement("div");
     captchaContainer.setAttribute("class", "captcha-container");
@@ -198,7 +194,8 @@ function showOnUI(dataObj){
     input.addEventListener("keydown", function(e){
         if(e.key == "Enter"){
             obj["captcha"] = input.value;
-            bookVaccine(obj, beneficiaries, dataObj["token"]);
+            let dose = dose_type.split(" ")[1]
+            bookVaccine(obj, beneficiaries, dataObj["token"], dose);
         }
     })
 }
@@ -221,7 +218,7 @@ function processData(beneficiaries, captcha){
     return obj;
 }
 
-function bookVaccine(obj, beneficiaries, token){
+function bookVaccine(obj, beneficiaries, token, dose){
     console.log(beneficiaries);
     fetch("https://cw.r41.io/booker/schedule", {
         method: "POST",
@@ -229,7 +226,7 @@ function bookVaccine(obj, beneficiaries, token){
             beneficiaries,
             captcha: obj["captcha"],
             center_id,
-            dose: dose_type,
+            dose,
             session_id,
             slot: obj["slot"],
             token
