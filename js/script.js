@@ -108,6 +108,8 @@ for(let i=0; i<vacOptions.length; i++){
             vac_param = "COVAXIN"
         }else if(vacElem.innerText == "C-SHIELD"){
             vac_param = "COVISHIELD"
+        }else if(vacElem.innerText == "SPUTNIK V"){
+            vac_param = "SPUTNIK V"
         }else{
             vac_param = null;
         }
@@ -192,7 +194,7 @@ function getData(mainContainer){
         }
     }
 
-    console.log(`Date: ${newDate} | district_id: ${district_id} | pincode: ${pincode} | cap_param: ${cap_param} | age_param: ${age_param} | vac_param: ${vac_param}`)
+    console.log(`Date: ${newDate} | district_id: ${district_id} | pincode: ${pincode} | cap_param: ${cap_param} | age_param: ${age_param} | vac_param: ${vac_param} | fee_type: ${fee_type}`)
 
     let fullUrl = pinFlag ? `${initialUrl}/calendarByPin?pincode=${pincode}&date=${newDate}` : `${initialUrl}/calendarByDistrict?district_id=${district_id}&date=${newDate}`
 

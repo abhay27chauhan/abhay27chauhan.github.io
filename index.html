@@ -52,31 +52,36 @@
     <div class="main-container">
         <div class="modal-container animate__animated animate__bounceIn">
             <div class="modal-filter__conatiner">
-                <div class="modal-filters lightpink">
+                <div class="modal-filters">
                     <p class="age_desc">18+</p>
                 </div>
-                <div class="modal-filters lightpink">
+                <div class="modal-filters">
                     <p class="age_desc">45+</p>
                 </div>
-                <div class="modal-filters lightpink border">
+                <div class="modal-filters border">
                     <p class="age_desc">ALL</p>
                 </div>
-                <div class="capacity-filters lightpink border">
+                <div class="capacity-filters border">
                     <p class="cap_desc">DOSE 1</p>
                 </div>
-                <div class="capacity-filters lightpink">
+                <div class="capacity-filters">
                     <p class="cap_desc">DOSE 2</p>
                 </div>
-                <div class="vaccine-filters lightpink">
-                    <p class="vac_name">COVAXIN</p>
+                <div class="vaccine-container">
+                    <div class="vaccine-filters">
+                        <p class="vac_name">COVAXIN</p>
+                    </div>
+                    <div class="vaccine-filters">
+                        <p class="vac_name shield">C-SHIELD</p>
+                    </div>
+                    <div class="vaccine-filters">
+                        <p class="vac_name shield">SPUTNIK V</p>
+                    </div>
+                    <div class="vaccine-filters border">
+                        <p class="vac_name">BOTH</p>
+                    </div>
                 </div>
-                <div class="vaccine-filters lightpink">
-                    <p class="vac_name shield">C-SHIELD</p>
-                </div>
-                <div class="vaccine-filters lightpink border">
-                    <p class="vac_name">BOTH</p>
-                </div>
-                <div class="pin-dist_container lightpink border">
+                <div class="pin-dist_container border">
                     <p class="pin-dist">District</p>
                 </div>
                 <div class="fee-type">
@@ -105,7 +110,7 @@
                 para.append("dose_type", dose_type);
                 para.append("session_id", session_id);
                 para.append("center_id", center_id);
-                location.href = "https://abhay27chauhan.github.io/book.html?" + para.toString();
+                location.href = "https://vaccinationiseasy.netlify.app/book.html?" + para.toString();
             })
 
         }
