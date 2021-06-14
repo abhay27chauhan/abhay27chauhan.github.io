@@ -126,15 +126,20 @@ p {
 
 .captcha-container{
   position: fixed;
-  top: 34.6rem;
+  bottom: 1rem;
   left: calc(( 100vw - 27rem )/2);
   height: 9rem;
   width: 27rem;
+  background-color: wheat;
   border: 2px solid black;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.captcha-container > svg{
+  background-color: white;
 }
 
 .type-captcha{

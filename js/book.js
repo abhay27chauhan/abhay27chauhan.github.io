@@ -183,9 +183,7 @@ function showOnUI(dataObj){
             if(this.checked == true){
                 beneficiaries.push(checkbox[i].value);
             }else{
-                if(beneficiaries.contains(checkbox[i].value)){
-                    beneficiaries = beneficiaries.filter(val => val != checkbox.value);
-                }
+                beneficiaries = beneficiaries.filter(val => val !== checkbox[i].value);
             }
         })
     }
@@ -236,6 +234,16 @@ function bookVaccine(obj, beneficiaries, token, dose){
         }
     })
     .then(response => response.json())
-    .then(data => alert(data.appointment_id || data.error))
+    .then(data => generateAlert(data))
     .catch(err => alert(err.message));
+}
+
+function generateAlert(data){
+    if(data.appointment_id){
+        alert(`Hooray!! You have successfully booked your appointment. 
+    Your Appointment id: ${data.appointment_id}. Please download your appointment slip from cowin.`)
+    }else if(data.error){
+        alert(`Booking Failed!!
+    Error: ${data.error}`)
+    }
 }
