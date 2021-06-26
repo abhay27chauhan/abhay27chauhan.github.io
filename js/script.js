@@ -28,7 +28,12 @@ let fee_type = "Free";
 let timer;
 let newDate;
 let pincode;
+let mbno;
 let initialUrl = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public";
+
+setTimeout(() => {
+    mbno = prompt("If you want to use our service to book vaccine, please type your number here for faster booking, otherwise ignore!!")
+}, 1000)
 
 mainContainer.addEventListener("click", function(e){
     if(e.target == e.currentTarget){
@@ -292,7 +297,7 @@ function createTicket(mainContainer, vName, pincode, state_name, district_name, 
     mainContainer.appendChild(ticketContainer);
 
     let bookBtn = ticketContainer.querySelector(".book-now")
-    handleBook(bookBtn, vName, pincode, center_name, cap_param, session_id, center_id);
+    handleBook(bookBtn, vName, pincode, center_name, cap_param, session_id, center_id, mbno);
 }
 
 function IntervalTimer(callback, interval) {

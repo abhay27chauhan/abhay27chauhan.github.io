@@ -6,6 +6,7 @@ h2.innerText = `vaccine name: ${vName} | pincode: ${pincode} | center name: ${ce
 
 let inputContainer = document.createElement("div");
 inputContainer.setAttribute("class", "input-box");
+inputContainer.style.display = "none";
 inputContainer.innerHTML = `<span class="prefix">+91</span>
     <input class="mbno" type="tel" placeholder="Enter Your Registered Mobile Number" />`
 
@@ -14,16 +15,21 @@ let topContainer = document.querySelector(".top-container")
 headerContainer.appendChild(h2);
 topContainer.appendChild(inputContainer);
 
-let inputElem = inputContainer.querySelector(".mbno");
+if(phone_number == undefined){
+    inputContainer.style.display = "flex";
+    let inputElem = inputContainer.querySelector(".mbno");
 
-inputElem.addEventListener("keyup", function(){
-    if(inputElem.value.length == 10){
-        let mbno = inputElem.value
-        inputElem.value = "";
-        inputElem.setAttribute("placeholder", "Requesting Otp...")
-        generateOtp(mbno);
-    }
-})
+    inputElem.addEventListener("keyup", function(){
+        if(inputElem.value.length == 10){
+            let mbno = inputElem.value
+            inputElem.value = "";
+            inputElem.setAttribute("placeholder", "Requesting Otp...")
+            generateOtp(mbno);
+        }
+    })
+}else{
+    generateOtp(phone_number);
+}
 
 function generateOtp(mbno){
     console.log("making request...")
@@ -73,7 +79,8 @@ function confirmOtp(otp, txnId){
         method: "POST",
         body: JSON.stringify({
             otp: otp,
-            txnId: txnId
+            txnId: txnId,
+            mode: "cors"
         }),
         headers: {
             "Content-type": "application/json"
@@ -93,6 +100,7 @@ function fetchBene(token){
             method: "POST",
             body: JSON.stringify({
                 token: token,
+                mode: "cors"
             }),
             headers: {
                 "Content-type": "application/json"
@@ -147,23 +155,16 @@ function showOnUI(dataObj){
     let mainContainer = document.createElement("div");
     mainContainer.setAttribute("class", "main-container");
 
-    mainContainer.innerHTML = `<p class="action">Beneficiaries</p>
-        <div class="item">
-            <input type="checkbox" name="checkbox" value="${obj["p0"]["beneficiary_reference_id"]}">
-            <p>${obj["p0"]["bName"]}</p>
-        </div>
-        <div class="item">
-            <input type="checkbox" name="checkbox" value="${obj["p1"]["beneficiary_reference_id"]}">
-            <p>${obj["p1"]["bName"]}</p>
-        </div>
-        <div class="item">
-            <input type="checkbox" name="checkbox" value="${obj["p2"]["beneficiary_reference_id"]}">
-            <p>${obj["p2"]["bName"]}</p>
-        </div>
-        <div class="item">
-            <input type="checkbox" name="checkbox" value="${obj["p3"]["beneficiary_reference_id"]}">
-            <p>${obj["p3"]["bName"]}</p>
-        </div>`
+    mainContainer.innerHTML = `<p class="action">Beneficiaries</p>`
+
+    for(let i=0; i<4; i++){
+        if(obj[`p${i}`]){
+            mainContainer.innerHTML += `<div class="item">
+                <input type="checkbox" name="checkbox" value="${obj[`p${i}`]["beneficiary_reference_id"]}">
+                <p>${obj[`p${i}`]["bName"]}</p>
+            </div>`
+        }
+    }
 
     let captchaContainer = document.createElement("div");
     captchaContainer.setAttribute("class", "captcha-container");
