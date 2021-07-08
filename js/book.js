@@ -15,7 +15,7 @@ let topContainer = document.querySelector(".top-container")
 headerContainer.appendChild(h2);
 topContainer.appendChild(inputContainer);
 
-if(phone_number == undefined){
+if(phone_number == "null"){
     inputContainer.style.display = "flex";
     let inputElem = inputContainer.querySelector(".mbno");
 
